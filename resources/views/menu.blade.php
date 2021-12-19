@@ -42,7 +42,7 @@
       <!--========== MENU ==========-->
       <section class="menu section bd-container" id="menu">
         <span class="section-subtitle">Special</span>
-        <h2 class="section-title">Menu of the week</h2>
+        <h2 class="section-title">Our Menu</h2>
 
         <div class="menu__container bd-grid">
           @foreach($menu as $result)
