@@ -15,7 +15,8 @@
               <div class="card-header"><h4>Register</h4></div>
 
               <div class="card-body">
-                <form method="POST" action="simpan_register.php">
+                <form method="POST" action="{{route('register.store')}}">
+                  @csrf
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="user">Username</label>
@@ -35,18 +36,9 @@
                       <label for="rumah">Alamat</label>
                       <input type="text" class="form-control" id="rumah" name="alamat" placeholder="Masukan Alamat">
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="sts">Status Registrasi</label>
-                        <select id="sts" class="form-control" name="status">
-                          <option selected>Pilih...</option>
-                          <option value="customer">customer</option>
-                          <option value="admin">admin</option>
-                          <option value="admin">chef</option>
-                          <option value="admin">cashier</option>
-                          <option value="admin">manajer</option>
-                          <option value="admin">waiter</option>
-                          <option value="admin">supplier</option>
-                        </select>
+                    <div class="form-group col-md-6">
+                      <label for="saldo">Saldo</label>
+                      <input type="text" class="form-control" id="saldo" name="saldo" placeholder="0" disabled>
                     </div>
                   </div>
                   <div class="form-group">

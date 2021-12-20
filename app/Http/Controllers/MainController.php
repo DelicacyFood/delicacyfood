@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Users;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -52,9 +54,11 @@ class MainController extends Controller
 
     public function home()
     {
-        $last_orderlist_id = DB::selectOne("select getNewId('orderlist') as value from dual");
-        $totalBayar = DB::selectOne("select hitungTotalBayar(1) as value from dual");
-        return view('pages.home', compact('totalBayar'));
+        // $user = DB::selectOne("select ('orderlist') as value from dual");
+        // $totalBayar = DB::selectOne("select hitungTotalBayar(1) as value from dual");
+        // $users = DB::table('users')->get();
+        $users = Users::all();
+        return view('pages.home', compact('users'));
     }
 
     public function credits()
@@ -75,26 +79,5 @@ class MainController extends Controller
     public function jumlah_order()
     {
         return view('pages.jumlah_order');
-    }
-
-    // Controller Auth
-    public function login()
-    {
-        return view('auth.login');
-    }
-
-    public function register()
-    {
-        return view('auth.register');
-    }
-
-    public function update_password()
-    {
-        return view('auth.update_password');
-    }
-
-    public function edit_profile()
-    {
-        return view('auth.edit_profile');
     }
 }

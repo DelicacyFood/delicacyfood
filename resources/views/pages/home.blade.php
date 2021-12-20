@@ -7,7 +7,9 @@
     <div class="section-header">
       <h1>Blank Page</h1>
     </div>
-    <p>{{$totalBayar->value}}</p>
+    @foreach($users as $user)
+      <p>{{$user->username}}</p>
+    @endforeach
     <div class="section-body"></div>
   </section>
 </div>
