@@ -27,7 +27,7 @@
                     <div id="accordion">
                       <div class="accordion">
                         <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
-                          <h4>Panel 1</h4>
+                          <h4>Apa itu Delicacy Food?</h4>
                         </div>
                         <div class="accordion-body collapse show" id="panel-body-1" data-parent="#accordion">
                           <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

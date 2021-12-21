@@ -81,15 +81,14 @@
       {{-- End Card --}}
       <div class="card">
         <div class="card-header">
-          <h4>Example Card</h4>
+          <h4>Delicacy Food</h4>
         </div>
         <div class="card-body">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delicacy Food adalah Food Marketplace Management System yang menghubungkan customer, menu makanan, driver, dan stakeholder lainnya dengan sistem restoran. Restoran ini merupakan restoran distributor sehingga makanan yang dipasok dalam bahan jadi, lalu diolah dan disajikan oleh waiter sesuai dengan pesanan customer yang memesan melalui pada aplikasi secara delivery ataupun memesan langsung ke restoran secara take away. Untuk customer yang memesan secara delivery, diharuskan memiliki akun untuk masuk ke dalam sistem aplikasi hingga kemudian bisa memesan makanan dan hanya dibatasi 1 akun saja dan juga memiliki saldo e-wallet pada aplikasi.
+          </p>
+          <p style="text-align: justify;">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada prosesnya, customer memesan suatu makanan tertentu dan akan dimasukkan ke dalam chart atau keranjang pesanan customer tersebut. Setelah itu, customer harus mengkonfirmasi seluruh pesanan yang ada di dalam keranjang dengan jenis layanan tertentu dengan membayar pesanannya yang kemudian akan masuk ke dalam draft pembelian di cashier untuk proses pembayaran. Ketika customer sudah memesan menu makanan, sistem akan mengvalidasi stok menu makanan, jika tersedia maka lanjut ke proses selanjutnya, jika tidak tersedia sistem akan memberikan informasi stok tidak memenuhi. Proses pembayaran sendiri dapat dilakukan dengan berbagai metode pembayaran cash, debit untuk pesanan take away dan e-wallet untuk pesanan delivery. Untuk pesanan delivery, jika saldo customer tidak memenuhi, customer dapat melakukan top-up berupa penambahan saldo e-wallet pada aplikasi dan setiap top-up dari customer akan tersimpan pada database sebagai draft dari masing-masing top-up. Setelah pembayaran, salah seorang driver harus mengonfirmasi untuk mengantar pesanan customer yang memesan secara delivery dan pesanan customer pun segera diolah yang kemudian akan dikirimkan oleh driver yang sudah mengonfirmasi. Seluruh draft pembelian, akan tersimpan sebagai bentuk laporan kepada manajer.
+          </p>
         </div>
       </div>
     </div>
