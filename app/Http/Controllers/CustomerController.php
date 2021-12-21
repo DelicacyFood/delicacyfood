@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Models\Customer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -82,5 +86,29 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         //
+    }
+
+    public function topup()
+    {
+        return view('pages.topup');
+    }
+
+    public function history_topup()
+    {
+        return view('pages.history_topup');
+    }
+
+    public function isi_saldo(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required',
+            'saldo' => 'required',
+        ]);
+        $username_customer = $credentials['username'];
+        $saldo_customer = $credentials['saldo'];
+
+        $dummy_var = DB::selectOne("select topupSaldo('$username_customer',$saldo_customer) as value from dual")->value;
+
+        return redirect('pages/dashboard')->with('success', 'Registration Success! Please Login');
     }
 }

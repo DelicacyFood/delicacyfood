@@ -17,6 +17,11 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function register()
+    {
+        return view('auth.register');
+    }
+
     public function update_password()
     {
         return view('auth.update_password');
@@ -35,9 +40,14 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        $request->session()->put('username', $credentials['username']);
+        $username_user = $credentials['username'];
+        $role_user = DB::selectOne("select getRoleUser('$username_user') as value from dual")->value;
         if (Auth::attempt($credentials)) {
+            $request->session()->put('hasLogin', 'true');
+            $request->session()->put('role', $role_user);
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            return redirect()->intended('pages/dashboard');
         }
 
         return back()->with('loginError', 'Login Failed!');
@@ -52,6 +62,42 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('pages/dashboard');
+    }
+
+    // Register
+    public function store(Request $request)
+    {
+        // Users
+        $users = new Users;
+        $temp1 = DB::selectOne("select getNewId('users') as value from dual");
+        $users->user_id = $temp1->value;
+        $users->password = Hash::make($request->password);
+        $users->username = $request->username;
+        $users->save();
+
+        // Customer
+        $customer = new Customer;
+        $customer->user_id = $temp1->value;
+        $customer->address = $request->alamat;
+        $customer->saldo = $request->saldo;
+
+        $customer->save();
+
+        //$validatedData['password'] = bcrypt($validatedData['password']);
+
+        // Jika menggunakan flash (baca flash storage di php)
+        // $request->session()->flash('success', 'Registration Success! Please Login');
+
+        return redirect('auth/login')->with('success', 'Registration Success! Please Login');
+    }
+
+    public function dashboard()
+    {
+        if (Auth::check()) {
+            return view('dashboard');
+        }
+
+        return redirect("login")->withSuccess('You are not allowed to access');
     }
 }

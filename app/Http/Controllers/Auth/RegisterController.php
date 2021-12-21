@@ -102,7 +102,7 @@ class RegisterController extends Controller
         // Jika menggunakan flash (baca flash storage di php)
         // $request->session()->flash('success', 'Registration Success! Please Login');
 
-        return redirect('login')->with(
+        return redirect('auth/login')->with(
             'success',
             'Registration Success! Please Login'
         );

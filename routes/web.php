@@ -23,18 +23,20 @@ Route::get('/modules/sweet-alert', 'App\Http\Controllers\MainController@sweetale
 // Pages
 Route::get('/pages/blank', 'App\Http\Controllers\MainController@home')->name('home');
 Route::get('/pages/dashboard', 'App\Http\Controllers\MainController@dashboard')->name('dashboard');
-Route::get('/pages/topup', 'App\Http\Controllers\MainController@topup')->name('topup');
+Route::get('/pages/topup', 'App\Http\Controllers\CustomerController@topup')->name('topup');
+Route::post('/pages/topup', 'App\Http\Controllers\CustomerController@isi_saldo')->name('topup.custom');
 Route::get('/pages/jumlah_order', 'App\Http\Controllers\MainController@jumlah_order')->name('jumlah_order');
 Route::get('/pages/orderlist', 'App\Http\Controllers\MainController@orderlist')->name('orderlist');
 Route::get('/pages/ordermenu', 'App\Http\Controllers\MainController@ordermenu')->name('ordermenu');
-Route::get('/pages/history_topup', 'App\Http\Controllers\MainController@history_topup')->name('history_topup');
+Route::get('/pages/history_topup', 'App\Http\Controllers\CustomerController@history_topup')->name('history_topup');
 Route::get('/pages/faq', 'App\Http\Controllers\MainController@faq')->name('faq');
 Route::get('/pages/credits', 'App\Http\Controllers\MainController@credits')->name('credits');
 
 // Auth
 Route::get('/auth/login', 'App\Http\Controllers\AuthController@login')->name('login');
 Route::post('/auth/login', 'App\Http\Controllers\AuthController@authenticate')->name('login.custom');
-Route::get('/auth/register', 'App\Http\Controllers\Auth\RegisterController@register')->name('register');
-Route::post('/auth/store', 'App\Http\Controllers\Auth\RegisterController@store')->name('register.store');
+Route::post('/auth/logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
+Route::get('/auth/register', 'App\Http\Controllers\AuthController@register')->name('register');
+Route::post('/auth/store', 'App\Http\Controllers\AuthController@store')->name('register.store');
 Route::post('/auth/update_password', 'App\Http\Controllers\AuthController@update_password')->name('update_password');
-Route::post('/auth/edit_profile', 'App\Http\Controllers\AuthController@edit_profile')->name('edit_profile');
+Route::get('/auth/edit_profile', 'App\Http\Controllers\AuthController@edit_profile')->name('edit_profile');

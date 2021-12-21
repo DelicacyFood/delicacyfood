@@ -27,7 +27,14 @@
           <ul class="nav__list">
             <li class="nav__item"><a href="{{route('start')}}" class="nav__link">Home</a></li>
             <li class="nav__item"><a href="#" class="nav__link active-link">Menu</a></li>
+            @if(session()->has('hasLogin'))
             <li class="nav__item"><a href="{{route('dashboard')}}" class="nav__link">Dashboard</a></li>
+            <li class="nav__item"><a href="/pages/dashboard" class="nav__link">Hi, {{ session()->get('username') }}</a></li>
+            @else
+            <li class="nav__item">
+              <a href="/auth/login" class="nav__link" > Login</a>
+            </li>
+            @endif
 
             <li><i class="bx bx-moon change-theme" id="theme-button"></i></li>
           </ul>

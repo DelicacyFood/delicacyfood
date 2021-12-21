@@ -16,11 +16,12 @@
 
               <div class="card-body">
                 <p class="text-muted">Masukkan jumlah saldo yang akan di-top-up</p>
-                <form method="POST">
+                <form action="{{ route('topup.custom') }}" method="POST">
+                  @csrf
                   <div class="form-group">
                     <label for="username">Username</label>
                     <input id="username" type="text" class="form-control" placeholder="Masukkan Username" name="username" tabindex="1" required autofocus />
-                    <div class="invalid-feedback">Please fill in your email</div>
+                    <div class="invalid-feedback">Please fill in your username</div>
                   </div>
                   <div class="form-group">
                     <label for="saldo">Saldo</label>

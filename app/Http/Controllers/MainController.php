@@ -31,15 +31,10 @@ class MainController extends Controller
     public function dashboard()
     {
         $customer = DB::selectOne("select totalCustomers as value from dual");
-        // $waiter = DB::table('menu')->get();
+        $saldo = DB::table('customer')->get();
         $sales = DB::selectOne("select numberOfOrders as value from dual");
         // $users = DB::table('users')->get();
         return view('pages.dashboard', compact('customer', 'sales'));
-    }
-
-    public function topup()
-    {
-        return view('pages.topup');
     }
 
     public function ordermenu()
@@ -69,11 +64,6 @@ class MainController extends Controller
     public function faq()
     {
         return view('pages.faq');
-    }
-
-    public function history_topup()
-    {
-        return view('pages.history_topup');
     }
 
     public function jumlah_order()
