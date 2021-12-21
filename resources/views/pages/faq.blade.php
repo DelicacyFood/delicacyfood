@@ -30,38 +30,63 @@
                           <h4>Apa itu Delicacy Food?</h4>
                         </div>
                         <div class="accordion-body collapse show" id="panel-body-1" data-parent="#accordion">
-                          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                          <p class="mb-0">
+                            Delicacy Food adalah marketplace yang menyediakan healthy food dengan bahan bahan yang berkualitas.
+                          </p>
                         </div>
                       </div>
                       <div class="accordion">
                         <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-2">
-                          <h4>Panel 2</h4>
+                          <h4>Bagaimana Cara Pelayanan di Delicacy Food?</h4>
                         </div>
                         <div class="accordion-body collapse" id="panel-body-2" data-parent="#accordion">
-                          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                          <p class="mb-0">
+                            Kami menyediakan pelayanan hanya take away dan juga delivery saja.
+                          </p>
                         </div>
                       </div>
                       <div class="accordion">
                         <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-3">
-                          <h4>Panel 3</h4>
+                          <h4>Kategori makanan apa saja yang ada di Delicacy Food?</h4>
                         </div>
                         <div class="accordion-body collapse" id="panel-body-3" data-parent="#accordion">
-                          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                          <p class="mb-0">
+                          Kami menyediakan kategori sebagai berikut:<br/>
+                          1. Drinks<br/>
+                          2. Grain<br/>
+                          3. Soup<br/>
+                          4. Pasta<br/>
+                          5. Vegetables<br/>
+                          6. Dessert<br/>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="accordion">
+                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-4">
+                          <h4>Menu apa saja yang ada di Delicacy Food?</h4>
+                        </div>
+                        <div class="accordion-body collapse" id="panel-body-4" data-parent="#accordion">
+                          <p class="mb-0">
+                          Kami menyediakan menu sebagai berikut:<br/>
+                          1. Avocado Salad<br/>
+                          2. Fettucini<br/>
+                          3. Linguine<br/>
+                          4. Fusili<br/>
+                          5. Drained Grain<br/>
+                          6. Protein Grain<br/>
+                          7. Oat<br/>
+                          8. Cocktail<br/>
+                          9. Mint Squash<br/>
+                          10. Milked Iced Coffee<br/>
+                          11. Bread Soup<br/>
+                          12. Carrot Soup<br/> 
+                          13. Curry Soup<br/> 
+                          14. Barbeque Salad<br/> 
+                          15. Home Salad<br/>
+                          16. Salad Bowl<br/> 
+                          17. Fish Salad<br/>
+                          18. Spinach Salad<br/>
+                          </p>
                         </div>
                       </div>
                     </div>
