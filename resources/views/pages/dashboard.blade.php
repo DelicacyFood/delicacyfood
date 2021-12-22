@@ -17,62 +17,13 @@
       <h2 class="section-title">Page 1</h2>
       {{-- Start Card --}}
       <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-          <div class="card card-statistic-1">
-            <div class="card-icon bg-primary">
-              <i class="far fa-user"></i>
-            </div>
-            <div class="card-wrap">
-              <div class="card-header">
-                <h4>Customers</h4>
-              </div>
-              <div class="card-body">
-                {{ $customer->value }}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-          <div class="card card-statistic-1">
-            <div class="card-icon bg-danger">
-              <i class="far fa-newspaper"></i>
-            </div>
-            <div class="card-wrap">
-              <div class="card-header">
-                <h4>Waiter</h4>
-              </div>
-              <div class="card-body">
-                42
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-          <div class="card card-statistic-1">
-            <div class="card-icon bg-warning">
-              <i class="far fa-file"></i>
-            </div>
-            <div class="card-wrap">
-              <div class="card-header">
-                <h4>Sales</h4>
-              </div>
-              <div class="card-body">
-                {{ $sales->value }}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-          <div class="card card-statistic-1">
-            <div class="card-icon bg-success">
-              <i class="fas fa-circle"></i>
-            </div>
-            <div class="card-wrap">
-              <div class="card-header">
-                <h4>Total Users</h4>
-              </div>
-              <div class="card-body">
-                47
+        <div class="col-12 mb-4">
+          <div class="hero bg-primary text-white">
+            <div class="hero-inner">
+              <h2>Welcome, {{ session()->get('username') }}!</h2>
+              <p class="lead">You almost arrived, complete the information about your account to complete registration.</p>
+              <div class="mt-4">
+                <a href="#" class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i> Setup Account</a>
               </div>
             </div>
           </div>
