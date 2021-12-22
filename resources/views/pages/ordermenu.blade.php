@@ -22,6 +22,8 @@
             <div class="card-header">
               <h4>Order Record Table -- 1</h4>
             </div>
+            <form action="{{ route('confirmOrder') }}" method="POST">
+            @csrf
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-striped" id="table-1">
@@ -60,16 +62,25 @@
                   </tfoot>
                 </table>
               </div>
-              <br>
+              {{-- Check Button Status Layanan --}}
+              <div class="section-title">Service Status</div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1" name="status_layanan" class="custom-control-input" value="Take Away">
+                <label class="custom-control-label" for="customRadioInline1">Take Away</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2" name="status_layanan" class="custom-control-input" value="Delivery" checked>
+                <label class="custom-control-label" for="customRadioInline2">Delivery</label>
+              </div>
+              {{-- End Check Button Status layanan --}}
+              <br><br><br>              
               <div class="text-md-right">
                 <div class="float-lg-left mb-lg-0 mb-3">
                   <a href="{{route('menu')}}" class="btn btn-info btn-icon icon-left"><i class="fas fa-arrow-left"></i> Back to Menu Page</a>
                 </div>
                 <div class="float-lg-left mb-lg-0 mb-3 ml-2">
-                  <form action="{{ route('confirmOrder',$totalPrice) }}" method="POST">
-                    @csrf
                     <button type="submit" class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
-                  </form>
+            </form>
                 </div>
                 {{-- <div class="float-lg-left mb-lg-0 mb-3 ml-2">
                   <form action="{{ route('cancelOrdermenu') }}" method="POST">

@@ -27,32 +27,34 @@
                 <table class="table table-striped" id="table-1">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Task Name</th>
-                      <th>Progress</th>
-                      <th>Members</th>
-                      <th>Due Date</th>
-                      <th>Status</th>
+                      <th>No</th>
+                      <th>Orderlist Id</th>
+                      <th>Order date</th>
+                      <th>Total Price</th>
+                      <th>Process Status</th>
+                      <th>Service Status</th>
+                      <th>Driver</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($orderlist as $order_list)
                     <tr>
+                      <td>{{$loop->iteration}}</td>
+                      <td>{{ $order_list->orderlist_id }}</td>
+                      <td>{{ date_format(date_create($order_list->order_date),"Y/m/d") }}</td>
+                      <td>Rp. {{ number_format($order_list->total_bayar) }}</td>
+                      <td>{{ $order_list->status_proses }}</td>
+                      <td>{{ $order_list->status_layanan }}</td>
+                      <td>{{ $order_list->driver_id }}</td>
                       <td>
-                        1
-                      </td>
-                      <td>Create a mobile app</td>
-                      <td>sad</td>
-                      <td>sad</td>
-                      <td>2018-01-20</td>
-                      <td>
-                        <div class="badge badge-success">Completed</div>
-                      </td>
-                      <td>
-                        <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                        <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                        <form action="#" method="POST"> @csrf
+                          <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                          <button class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" onclick="confirm('Are You Sure Wants To Delete it?')"><i class="fas fa-trash"></i></button>
+                        </form>
                       </td>
                     </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>

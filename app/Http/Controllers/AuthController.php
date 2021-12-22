@@ -47,12 +47,15 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        // Session User_id, Username, hasLogin, and Role
         $request->session()->put('username', $credentials['username']);
         $username_user = $credentials['username'];
         $role_user = DB::selectOne("select getRoleUser('$username_user') as value from dual")->value;
+        $user_id = DB::selectOne("select getUserId('$username_user') as value from dual")->value;
         if (Auth::attempt($credentials)) {
             $request->session()->put('hasLogin', 'true');
             $request->session()->put('role', $role_user);
+            $request->session()->put('user_id', $user_id);
             $request->session()->regenerate();
             return redirect()->intended('pages/dashboard');
         }

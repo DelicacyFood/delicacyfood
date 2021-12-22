@@ -20,7 +20,7 @@ class OrdermenuController extends Controller
             echo "<script>alert('No Items in Cart')</script>";
             return view('pages.dashboard', compact('customer', 'sales'));
         }
-        // return view('pages.ordermenu');
+        return view('pages.ordermenu');
     }
 
     public function jumlah_order($menu_id)

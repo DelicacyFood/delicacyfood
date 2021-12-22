@@ -30,11 +30,16 @@ class MainController extends Controller
     // Controller Pages
     public function dashboard()
     {
-        $customer = DB::selectOne("select totalCustomers as value from dual");
-        $saldo = DB::table('customer')->get();
-        $sales = DB::selectOne("select numberOfOrders as value from dual");
-        // $users = DB::table('users')->get();
-        return view('pages.dashboard', compact('customer', 'sales'));
+        if (session()->has('hasLogin')) {
+            $customer = DB::selectOne("select totalCustomers as value from dual");
+            $saldo = DB::table('customer')->get();
+            $sales = DB::selectOne("select numberOfOrders as value from dual");
+            // $users = DB::table('users')->get();
+            return view('pages.dashboard', compact('customer', 'sales'));
+        } else {
+            echo "<script>alert('Anda harus login terlebih dahulu');</script>";
+            return view('start');
+        }
     }
 
     public function orderlist()
