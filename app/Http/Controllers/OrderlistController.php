@@ -27,12 +27,14 @@ class OrderlistController extends Controller
         $orderlist = new Orderlist;
         $orderlist->orderlist_id = DB::selectOne("select getNewId('orderlist') as value from dual")->value;
 
+        // Get Total Bayar
         $oldCart = session()->get('cart');
         $cart = new Cart($oldCart);
         $orderlist->total_bayar = $cart->totalPrice;
 
         $orderlist->order_date = $tanggal_pemesanan;
 
+        // Get Customer and Waiter ID
         if ($temp_param == 'true') {
             $users_id = $customer_id;
             $orderlist->customer_user_id = $users_id;
@@ -44,14 +46,29 @@ class OrderlistController extends Controller
         }
         $orderlist->driver_id = NULL;
 
+        // Get Status Layanan
         if ($request->status_layanan == 'Take Away') {
             $orderlist->status_layanan = 'Take Away';
         } elseif ($request->status_layanan == 'Delivery') {
             $orderlist->status_layanan = 'Delivery';
         }
 
+        // Get Status Prosess
         $orderlist->status_proses = 'Payment Completed';
         $orderlist->save();
+
+
+        // Insert Data Ordermenu to Ordermenu Table
+        $temp_ordermenu_id = $orderlist->orderlist_id;
+        $oldCart = session()->get('cart');
+        $cart = new Cart($oldCart);
+        foreach ($cart->items as $items) {
+            $ordermenu = new Ordermenu;
+            $ordermenu->orderlist_id = $temp_ordermenu_id;
+            $ordermenu->menu_id = $items['item']['menu_id'];
+            $ordermenu->jumlah_order = $items['qty'];
+            $ordermenu->save();
+        }
 
         session()->forget('cart');
         return redirect()->route('dashboard');
