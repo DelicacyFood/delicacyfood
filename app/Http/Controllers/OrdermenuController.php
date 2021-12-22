@@ -13,7 +13,14 @@ class OrdermenuController extends Controller
 {
     public function ordermenu()
     {
-        return view('pages.ordermenu');
+        if (!session()->has('cart')) {
+            $customer = DB::selectOne("select totalCustomers as value from dual");
+            $saldo = DB::table('customer')->get();
+            $sales = DB::selectOne("select numberOfOrders as value from dual");
+            echo "<script>alert('No Items in Cart')</script>";
+            return view('pages.dashboard', compact('customer', 'sales'));
+        }
+        // return view('pages.ordermenu');
     }
 
     public function jumlah_order($menu_id)
@@ -50,7 +57,11 @@ class OrdermenuController extends Controller
     public function getCart()
     {
         if (!session()->has('cart')) {
-            return view('menu');
+            $customer = DB::selectOne("select totalCustomers as value from dual");
+            $saldo = DB::table('customer')->get();
+            $sales = DB::selectOne("select numberOfOrders as value from dual");
+            echo "<script>alert('No Items in Cart')</script>";
+            return view('pages.dashboard', compact('customer', 'sales'));
         }
         $oldCart = session()->get('cart');
         $cart = new Cart($oldCart);

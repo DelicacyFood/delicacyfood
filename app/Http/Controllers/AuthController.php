@@ -14,6 +14,13 @@ class AuthController extends Controller
     // Controller Auth
     public function login()
     {
+        if (session()->has('hasLogin')) {
+            $customer = DB::selectOne("select totalCustomers as value from dual");
+            $saldo = DB::table('customer')->get();
+            $sales = DB::selectOne("select numberOfOrders as value from dual");
+            echo "<script>alert('You already signed in')</script>";
+            return view('pages.dashboard', compact('customer', 'sales'));
+        }
         return view('auth.login');
     }
 

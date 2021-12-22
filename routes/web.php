@@ -38,7 +38,8 @@ Route::get('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuContr
 Route::post('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@save_jumlah_order')->name('jumlah_order.custom');
 
 // Orderlist
-Route::post('/pages/ordermenu', 'App\Http\Controllers\OrderlistController@confirmOrder')->name('confirmOrder');
+Route::get('/pages/orderlist', 'App\Http\Controllers\OrderlistController@orderlist')->name('orderlist');
+Route::post('/pages/orderlist', 'App\Http\Controllers\OrderlistController@confirmOrder')->name('confirmOrder');
 
 // Auth
 Route::get('/auth/login', 'App\Http\Controllers\AuthController@login')->name('login');

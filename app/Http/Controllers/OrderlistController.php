@@ -24,4 +24,9 @@ class OrderlistController extends Controller
 
         session()->forget('cart');
     }
+
+    public function orderlist()
+    {
+        return view('pages.orderlist');
+    }
 }

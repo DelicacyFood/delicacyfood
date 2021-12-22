@@ -95,7 +95,18 @@ class CustomerController extends Controller
 
     public function history_topup()
     {
-        return view('pages.history_topup');
+        $customer = DB::selectOne("select totalCustomers as value from dual");
+        $saldo = DB::table('customer')->get();
+        $sales = DB::selectOne("select numberOfOrders as value from dual");
+        if (session()->has('hasLogin')) {
+            if (session()->get('role') == 'customer') {
+                echo "<script>alert('You're not allowed!')</script>";
+                return view('pages.dashboard', compact('customer', 'sales'));
+            }
+            return view('pages.history_topup');
+        }
+        echo "<script>alert('You're not allowed!')</script>";
+        return view('pages.dashboard', compact('customer', 'sales'));
     }
 
     public function isi_saldo(Request $request)
@@ -107,7 +118,17 @@ class CustomerController extends Controller
         $username_customer = $credentials['username'];
         $saldo_customer = $credentials['saldo'];
 
-        $dummy_var = DB::selectOne("select topupSaldo('$username_customer',$saldo_customer) as value from dual")->value;
+        $procedureName = 'topupSaldo';
+
+        $bindings = [
+            'username'  => $username_customer,
+            'saldo'  => $saldo_customer,
+        ];
+
+        $result = DB::executeProcedure($procedureName, $bindings);
+
+        // dd($result);
+        // $dummy_var = DB::selectOne("select topupSaldo('$username_customer',$saldo_customer) as value from dual")->value;
 
         return redirect('pages/dashboard')->with('success', 'Registration Success! Please Login');
     }
