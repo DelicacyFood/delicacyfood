@@ -25,10 +25,17 @@ class Cart
         $storedItem = $this->items[$id];
       }
     }
-    // $storedItem['qty']++;
     $storedItem['price'] = $item->harga_menu * $storedItem['qty'];
+    // $storedItem['qty'] += $jumlah_order;
     $this->items[$id] = $storedItem;
     $this->totalQty += $jumlah_order;
     $this->totalPrice += $storedItem['price'];
+  }
+
+  public function removeItem($menu_id)
+  {
+    $this->totalQty -= $this->items[$menu_id]['qty'];
+    $this->totalPrice -= $this->items[$menu_id]['price'];
+    unset($this->items[$menu_id]);
   }
 }

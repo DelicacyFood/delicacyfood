@@ -32,7 +32,8 @@ Route::get('/pages/credits', 'App\Http\Controllers\MainController@credits')->nam
 
 // Ordermenu
 Route::get('/pages/ordermenu', 'App\Http\Controllers\OrdermenuController@getCart')->name('ordermenu');
-Route::post('/pages/ordermenu', 'App\Http\Controllers\OrdermenuController@cancelOrdermenu')->name('cancelOrdermenu');
+// Route::post('/pages/ordermenu/{menu_id}', 'App\Http\Controllers\OrdermenuController@cancelOrdermenu')->name('cancelOrdermenu');
+Route::post('/pages/ordermenu/{menu_id}', 'App\Http\Controllers\OrdermenuController@deleteOrdermenu')->name('deleteOrdermenu');
 Route::get('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@jumlah_order')->name('jumlah_order');
 Route::post('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@save_jumlah_order')->name('jumlah_order.custom');
 

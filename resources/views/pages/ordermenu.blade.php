@@ -44,8 +44,10 @@
                       <td>{{ $product['qty'] }}</td>
                       <td>Rp. {{ number_format($product['price']) }}</td>
                       <td>
-                        <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                        <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                        <form action="{{ route('deleteOrdermenu',$product['item']['menu_id']) }}" method="POST"> @csrf
+                          <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                          <button class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" onclick="confirm('Are You Sure Wants To Delete it?')"><i class="fas fa-trash"></i></button>
+                        </form>
                       </td>
                     </tr>
                     @endforeach

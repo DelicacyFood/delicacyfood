@@ -43,7 +43,7 @@ class OrdermenuController extends Controller
         $cart->add($menu, $menu->menu_id, $jumlah_order);
 
         $request->session()->put('cart', $cart);
-        // dd($request->session()->get('cart');
+        // dd($request->session()->get('cart'));
         return redirect()->route('ordermenu');
     }
 
@@ -57,8 +57,29 @@ class OrdermenuController extends Controller
         return view('pages.ordermenu', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice, 'totalQty' => $cart->totalQty]);
     }
 
-    public function cancelOrdermenu()
+    // public function cancelOrdermenu(Request $request, $menu_id)
+    // {
+    //     $menu = Menu::find($menu_id);
+    //     $request->session()->forget('cart', $menu->menu_id);
+    //     return redirect()->route('menu');
+    // }
+
+    public function deleteOrdermenu($menu_id)
     {
-        session()->forget('cart');
+        $oldCart = session()->has('cart') ? session()->get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($menu_id);
+
+        if (count($cart->items) > 0) {
+            session()->put('cart', $cart);
+        } else {
+            session()->forget('cart');
+        }
+
+        if (session()->has('cart')) {
+            return redirect()->route('ordermenu');
+        } else {
+            return redirect()->route('menu');
+        }
     }
 }
