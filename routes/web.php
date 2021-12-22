@@ -25,12 +25,19 @@ Route::get('/pages/blank', 'App\Http\Controllers\MainController@home')->name('ho
 Route::get('/pages/dashboard', 'App\Http\Controllers\MainController@dashboard')->name('dashboard');
 Route::get('/pages/topup', 'App\Http\Controllers\CustomerController@topup')->name('topup');
 Route::post('/pages/topup', 'App\Http\Controllers\CustomerController@isi_saldo')->name('topup.custom');
-Route::get('/pages/jumlah_order', 'App\Http\Controllers\MainController@jumlah_order')->name('jumlah_order');
 Route::get('/pages/orderlist', 'App\Http\Controllers\MainController@orderlist')->name('orderlist');
-Route::get('/pages/ordermenu', 'App\Http\Controllers\MainController@ordermenu')->name('ordermenu');
 Route::get('/pages/history_topup', 'App\Http\Controllers\CustomerController@history_topup')->name('history_topup');
 Route::get('/pages/faq', 'App\Http\Controllers\MainController@faq')->name('faq');
 Route::get('/pages/credits', 'App\Http\Controllers\MainController@credits')->name('credits');
+
+// Ordermenu
+Route::get('/pages/ordermenu', 'App\Http\Controllers\OrdermenuController@getCart')->name('ordermenu');
+Route::post('/pages/ordermenu', 'App\Http\Controllers\OrdermenuController@cancelOrdermenu')->name('cancelOrdermenu');
+Route::get('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@jumlah_order')->name('jumlah_order');
+Route::post('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@save_jumlah_order')->name('jumlah_order.custom');
+
+// Orderlist
+Route::post('/pages/ordermenu', 'App\Http\Controllers\OrderlistController@confirmOrder')->name('confirmOrder');
 
 // Auth
 Route::get('/auth/login', 'App\Http\Controllers\AuthController@login')->name('login');

@@ -29,7 +29,7 @@
             <li class="nav__item"><a href="#" class="nav__link active-link">Menu</a></li>
             @if(session()->has('hasLogin'))
             <li class="nav__item"><a href="{{route('dashboard')}}" class="nav__link">Dashboard</a></li>
-            <li class="nav__item"><a href="/pages/dashboard" class="nav__link">Hi, {{ session()->get('username') }}</a></li>
+            <li class="nav__item"><a href="#" class="nav__link">Hi, {{ session()->get('username') }}</a></li>
             @else
             <li class="nav__item">
               <a href="/auth/login" class="nav__link" > Login</a>
@@ -57,8 +57,12 @@
             <img src="/upload/{{$result->menu_image}}" alt="" class="menu__img" />
             <h3 class="menu__name">{{$result->menu_name}}</h3>
             <span class="menu__detail">Stok : {{$result->stok}}</span>
-            <span class="menu__preci">Rp{{$result->harga_menu}}</span>
-            <a href="{{route('jumlah_order')}}" class="button menu__button"><i class="bx bx-cart-alt"></i></a>
+            <span class="menu__preci">Rp{{number_format($result->harga_menu)}}</span>
+            @if(session()->has('hasLogin'))
+            <a href="{{route('jumlah_order',$result->menu_id)}}" class="button menu__button"><i class="bx bx-cart-alt"></i></a>
+            @else
+            <a href="{{route('login')}}" class="button menu__button"><i class="bx bx-cart-alt"></i></a>
+            @endif
           </div>
           @endforeach
         </div>
@@ -112,8 +116,10 @@
     </footer>
 
     <!--========== SCROLL REVEAL ==========-->
-    <script src="https://unpkg.com/scrollreveal"></script>
-
+    {{-- <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        ScrollReveal().reveal('.menu__content', { delay: 1500 });
+    </script> --}}
     <!--========== MAIN JS ==========-->
     <script src="/assets-front-end/js/main.js"></script>
   </body>

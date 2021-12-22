@@ -15,7 +15,7 @@
 
     <div class="section-body">
       <h2 class="section-title">Page 3</h2>
-      
+      @if(session()->has('cart'))
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -27,46 +27,66 @@
                 <table class="table table-striped" id="table-1">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Task Name</th>
-                      <th>Progress</th>
-                      <th>Members</th>
-                      <th>Due Date</th>
-                      <th>Status</th>
+                      <th>No</th>
+                      <th>Menu Name</th>
+                      <th>Menu Price</th>
+                      <th>Qty</th>
+                      <th>Price</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($products as $product)
                     <tr>
-                      <td>
-                        1
-                      </td>
-                      <td>Create a mobile app</td>
-                      <td>sad</td>
-                      <td>sad</td>
-                      <td>2018-01-20</td>
-                      <td>
-                        <div class="badge badge-success">Completed</div>
-                      </td>
+                      <td>{{$loop->iteration}}</td>
+                      <td>{{ $product['item']['menu_name'] }}</td>
+                      <td>Rp. {{ number_format($product['item']['harga_menu']) }}</td>
+                      <td>{{ $product['qty'] }}</td>
+                      <td>Rp. {{ number_format($product['price']) }}</td>
                       <td>
                         <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                         <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
                       </td>
                     </tr>
+                    @endforeach
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colspan="2">Total Belanja : &emsp;Rp. {{number_format($totalPrice)}}</th>
+                      <th colspan="2">Total Qty : &emsp;{{$totalQty}}</th>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
               <br>
               <div class="text-md-right">
                 <div class="float-lg-left mb-lg-0 mb-3">
-                  <button class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
-                  <button class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
+                  <a href="{{route('menu')}}" class="btn btn-info btn-icon icon-left"><i class="fas fa-arrow-left"></i> Back to Menu Page</a>
                 </div>
+                <div class="float-lg-left mb-lg-0 mb-3 ml-2">
+                  <form action="{{ route('confirmOrder',$totalPrice) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
+                  </form>
+                </div>
+                {{-- <div class="float-lg-left mb-lg-0 mb-3 ml-2">
+                  <form action="{{ route('cancelOrdermenu') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i>Cancel</button>
+                  </form>
+                </div> --}}
               </div>
             </div>
           </div>
         </div>
       </div>
+      @else
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+                <h2>No Items in Cart!</h2>
+            </div>
+        </div>
+      @endif
     </div>
   </section>
 </div>

@@ -16,10 +16,11 @@
 
               <div class="card-body">
                 <p class="text-muted">Masukkan jumlah order untuk menu </p>
-                <form method="POST">
+                <form action="{{ route('jumlah_order.custom',$menu->menu_id) }}" method="POST">
+                  @csrf
                   <div class="form-group">
                     <label for="jumlah_order">Jumlah Order</label>
-                    <input id="jumlah_order" type="text" class="form-control" name="jumlah_order" tabindex="1" required autofocus>
+                    <input id="jumlah_order" type="number" class="form-control" name="jumlah_order" tabindex="1" required autofocus>
                   </div>
 
                   <div class="form-group">

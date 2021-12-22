@@ -37,11 +37,6 @@ class MainController extends Controller
         return view('pages.dashboard', compact('customer', 'sales'));
     }
 
-    public function ordermenu()
-    {
-        return view('pages.ordermenu');
-    }
-
     public function orderlist()
     {
         return view('pages.orderlist');
@@ -64,10 +59,5 @@ class MainController extends Controller
     public function faq()
     {
         return view('pages.faq');
-    }
-
-    public function jumlah_order()
-    {
-        return view('pages.jumlah_order');
     }
 }
