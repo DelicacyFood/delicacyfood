@@ -40,6 +40,10 @@ Route::post('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuCont
 // Orderlist
 Route::get('/pages/orderlist', 'App\Http\Controllers\OrderlistController@orderlist')->name('orderlist');
 Route::post('/pages/orderlist', 'App\Http\Controllers\OrderlistController@confirmOrder')->name('confirmOrder');
+Route::post('/pages/orderlist/delete/{$orderlist_id}', 'App\Http\Controllers\OrderlistController@deleteOrderlist')->name('deleteOrderlist');
+Route::get('/pages/orderlist/detail/{$orderlist_id}', 'App\Http\Controllers\OrderlistController@detailOrderlist')->name('detailOrderlist');
+Route::get('/pages/orderlist/detail/{$orderlist_id}', 'App\Http\Controllers\OrderlistController@confirmDetailOrderlist')->name('confirmDetailOrderlist');
+Route::post('/pages/orderlist/detail/confirmpayment/{$orderlist_id}', 'App\Http\Controllers\OrderlistController@confirmPayment')->name('confirmPayment');
 
 // Auth
 Route::get('/auth/login', 'App\Http\Controllers\AuthController@login')->name('login');

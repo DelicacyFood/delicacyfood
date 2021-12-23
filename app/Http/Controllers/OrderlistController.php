@@ -54,7 +54,7 @@ class OrderlistController extends Controller
         }
 
         // Get Status Prosess
-        $orderlist->status_proses = 'Payment Completed';
+        $orderlist->status_proses = 'Order Placed';
         $orderlist->save();
 
 
@@ -77,6 +77,33 @@ class OrderlistController extends Controller
     public function orderlist()
     {
         $orderlist = DB::table('orderlist')->get();
+        // Get Driver Name
         return view('pages.orderlist', compact('orderlist'));
+    }
+
+    public function deleteOrderlist($orderlist_id)
+    {
+        $orderlist = Orderlist::find($orderlist_id);
+        $orderlist->delete();
+        return redirect()->route('orderlist');
+    }
+
+    public function detailOrderlist($orderlist_id)
+    {
+        $products = DB::table('ordermenu')
+            ->join('menu', function ($join, $orderlist_id) {
+                $join->on('ordermenu.menu_id', '=', 'menu.menu_id')
+                    ->where('ordermenu.orderlist_id', '=', $orderlist_id);
+            })
+            ->get();
+        return view('pages.detailorderlist', compact('products', 'orderlist_id'));
+    }
+
+    public function confirmPayment($orderlist_id)
+    {
+        $orderlist = Orderlist::find($orderlist_id);
+        $orderlist->status_proses = 'Payment Completed';
+        $orderlist->update();
+        return redirect()->route('orderlist');
     }
 }
