@@ -11,5 +11,5 @@ class History_Topup extends Model
     protected $guarded = [];
     public $timestamps = false;
     protected $table = 'history_topup';
-    // protected $primaryKey = 'menu_id';
+    protected $primaryKey = 'history_topup_id';
 }

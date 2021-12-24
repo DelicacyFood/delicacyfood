@@ -26,12 +26,18 @@ Route::get('/modules/sweet-alert', 'App\Http\Controllers\MainController@sweetale
 // Pages
 Route::get('/pages/blank', 'App\Http\Controllers\MainController@home')->name('home');
 Route::get('/pages/dashboard', 'App\Http\Controllers\MainController@dashboard')->name('dashboard');
-Route::get('/pages/topup', 'App\Http\Controllers\CustomerController@topup')->name('topup');
-Route::post('/pages/topup', 'App\Http\Controllers\CustomerController@isi_saldo')->name('topup.custom');
 Route::get('/pages/orderlist', 'App\Http\Controllers\MainController@orderlist')->name('orderlist');
-Route::get('/pages/history_topup', 'App\Http\Controllers\CustomerController@history_topup')->name('history_topup');
 Route::get('/pages/faq', 'App\Http\Controllers\MainController@faq')->name('faq');
 Route::get('/pages/credits', 'App\Http\Controllers\MainController@credits')->name('credits');
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Top up
+Route::get('/pages/topup', 'App\Http\Controllers\CustomerController@topup')->name('topup');
+Route::post('/pages/topup', 'App\Http\Controllers\CustomerController@isi_saldo')->name('topup.custom');
+Route::get('/pages/history_topup', 'App\Http\Controllers\CustomerController@history_topup')->name('history_topup');
+Route::post('/pages/history_topup/{saldo}/{topup_id}', 'App\Http\Controllers\CustomerController@store_saldo')->name('store_saldo');
 
 
 

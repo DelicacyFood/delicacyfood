@@ -27,32 +27,31 @@
                 <table class="table table-striped" id="table-1">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Task Name</th>
-                      <th>Progress</th>
-                      <th>Members</th>
-                      <th>Due Date</th>
+                      <th>No</th>
+                      <th>History_Topup_id</th>
+                      <th>Customer_User_id</th>
+                      <th>Top up Date</th>
+                      <th>Total Top up</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($historytopup as $history_topup)
                     <tr>
+                      <td>{{$loop->iteration}}</td>
+                      <td>{{ $history_topup->history_topup_id }}</td>
+                      <td>{{ $history_topup->customer_user_id }}</td>
+                      <td>{{ date_format(date_create($history_topup->tanggal_topup),"Y/m/d") }}</td>
+                       <td>Rp. {{ number_format($history_topup->jumlah_topup) }}</td>
+                      <td>{{ $history_topup->status_topup }}</td>
                       <td>
-                        1
-                      </td>
-                      <td>Create a mobile app</td>
-                      <td>sad</td>
-                      <td>sad</td>
-                      <td>2018-01-20</td>
-                      <td>
-                        <div class="badge badge-success">Completed</div>
-                      </td>
-                      <td>
-                        <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                        <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                        <form action="{{route('store_saldo', [$history_topup->jumlah_topup, $history_topup->history_topup_id])}}" method="POST"> @csrf
+                          <button class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Confirm" onclick="confirm('Are You Sure Wants To Confirm it?')">Confirm</button>
+                        </form>
                       </td>
                     </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>

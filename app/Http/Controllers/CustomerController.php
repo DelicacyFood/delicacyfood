@@ -96,59 +96,59 @@ class CustomerController extends Controller
 
     public function history_topup()
     {
-        // if (session()->has('hasLogin')) {
-        //     if (session()->get('role') == 'customer') {
-        //         echo "<script>alert('You're not allowed!')</script>";
-        //         return view('pages.dashboard');
-        //     }
-        return view('pages.topup.history_topup');
-        // }
-        // echo "<script>alert('You're not allowed!')</script>";
-        // return view('pages.dashboard');
+        $historytopup = DB::table('history_topup')->get();
+        return view('pages.topup.history_topup', compact('historytopup'));
     }
 
     // Masukkin topup ke history_topup
     public function isi_saldo(Request $request)
     {
-        $temp1 = DB::selectOne("select getNewId('history_topup') as value from dual");
+        $credentials = $request->validate([
+            'saldo' => 'required',
+        ]);
+        $tanggal_topup = date("Y-m-d");
 
-        // Driver
+        // History_Topup
         $history_topup = new History_Topup;
-        $history_topup->driver_id = $temp1->value;
-        $history_topup->driver_name = $request->username;
-        $history_topup->phone = $request->phone;
-        $driver->city = $request->city;
-        $driver->password = Hash::make($request->password);
+        $history_topup->history_topup_id = DB::selectOne("select getNewId('history_topup') as value from dual")->value;
+        $history_topup->customer_user_id = session()->get('user_id');
+        $history_topup->tanggal_topup = $tanggal_topup;
+        $history_topup->status_topup = 'Pending';
+        $history_topup->jumlah_topup = $credentials['saldo'];
 
-        $driver->save();
+        $history_topup->save();
 
-        return redirect('auth/login_driver')->with('success', 'Registration Success! Please Login');
+        return redirect('pages/history_topup')->with('success', 'Registration Success! Please Login');
     }
 
 
     // Store ke Saldo Customer
-    public function store_saldo(Request $request)
+    public function store_saldo($saldo, $topup_id)
     {
-        $credentials = $request->validate([
-            'saldo' => 'required',
-        ]);
-        $username_customer = $request->session()->get('username');
-        $user_id_customer = $request->session()->get('user_id');
-        $saldo_customer = $credentials['saldo'];
+        $history = DB::select('select status_topup from history_topup where history_topup_id = ?', [$topup_id]);
+        $status_topup = $history[0]->status_topup;
+        if ($status_topup == 'Pending') {
+            $username_customer = session()->get('username');
+            $user_id_customer = session()->get('user_id');
+            $saldo_customer = $saldo;
 
-        $procedureName = 'topupSaldo';
+            $procedureName = 'topupSaldo';
 
-        $bindings = [
-            'username'  => $username_customer,
-            'saldo'  => $saldo_customer,
-            'user_id_in' => $user_id_customer,
-        ];
+            $bindings = [
+                'username'  => $username_customer,
+                'saldo'  => $saldo_customer,
+                'user_id_in' => $user_id_customer,
+            ];
 
-        $result = DB::executeProcedure($procedureName, $bindings);
+            $result = DB::executeProcedure($procedureName, $bindings);
 
-        // dd($result);
-        // $dummy_var = DB::selectOne("select topupSaldo('$username_customer',$saldo_customer) as value from dual")->value;
+            $history_topup = History_Topup::find($topup_id);
+            $history_topup->status_topup = 'Top up Completed';
+            $history_topup->update();
+        } else {
+            echo '<script>alert("Top up sudah dilakukan")</script>';
+        }
 
-        return redirect('pages/dashboard')->with('success', 'Registration Success! Please Login');
+        return redirect('pages/history_topup')->with('success', 'Registration Success! Please Login');
     }
 }

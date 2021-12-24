@@ -49,7 +49,7 @@
                       <td>{{ $order_list->driver_id }}</td>
                       <td>
                         <form action="{{route('deleteOrderlist',$order_list->orderlist_id)}}" method="POST"> @csrf
-                          <a href="{{route('detailOrderlist', $order_list->orderlist_id)}}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Detail">Detail</a>
+                          <a href="{{route('detailOrderlist', $order_list->orderlist_id)}}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Confirm">Confirm</a>
                           {{-- <button class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" onclick="confirm('Are You Sure Wants To Delete it?')"><i class="fas fa-trash"></i></button> --}}
                         </form>
                       </td>

@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title', 'DataTables')
+@section('title', 'Confirm Order')
 @section('content')
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Detail Orderlist</h1>
+      <h1>Confirm Orderlist</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="#">Views</a></div>
         <div class="breadcrumb-item"><a href="#">Pages</a></div>
