@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
+use App\Models\History_Topup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -90,32 +91,49 @@ class CustomerController extends Controller
 
     public function topup()
     {
-        return view('pages.topup');
+        return view('pages.topup.topup');
     }
 
     public function history_topup()
     {
-        $customer = DB::selectOne("select totalCustomers as value from dual");
-        $saldo = DB::table('customer')->get();
-        $sales = DB::selectOne("select numberOfOrders as value from dual");
-        if (session()->has('hasLogin')) {
-            if (session()->get('role') == 'customer') {
-                echo "<script>alert('You're not allowed!')</script>";
-                return view('pages.dashboard', compact('customer', 'sales'));
-            }
-            return view('pages.history_topup');
-        }
-        echo "<script>alert('You're not allowed!')</script>";
-        return view('pages.dashboard', compact('customer', 'sales'));
+        // if (session()->has('hasLogin')) {
+        //     if (session()->get('role') == 'customer') {
+        //         echo "<script>alert('You're not allowed!')</script>";
+        //         return view('pages.dashboard');
+        //     }
+        return view('pages.topup.history_topup');
+        // }
+        // echo "<script>alert('You're not allowed!')</script>";
+        // return view('pages.dashboard');
     }
 
+    // Masukkin topup ke history_topup
     public function isi_saldo(Request $request)
     {
+        $temp1 = DB::selectOne("select getNewId('history_topup') as value from dual");
+
+        // Driver
+        $history_topup = new History_Topup;
+        $history_topup->driver_id = $temp1->value;
+        $history_topup->driver_name = $request->username;
+        $history_topup->phone = $request->phone;
+        $driver->city = $request->city;
+        $driver->password = Hash::make($request->password);
+
+        $driver->save();
+
+        return redirect('auth/login_driver')->with('success', 'Registration Success! Please Login');
+    }
+
+
+    // Store ke Saldo Customer
+    public function store_saldo(Request $request)
+    {
         $credentials = $request->validate([
-            'username' => 'required',
             'saldo' => 'required',
         ]);
-        $username_customer = $credentials['username'];
+        $username_customer = $request->session()->get('username');
+        $user_id_customer = $request->session()->get('user_id');
         $saldo_customer = $credentials['saldo'];
 
         $procedureName = 'topupSaldo';
@@ -123,6 +141,7 @@ class CustomerController extends Controller
         $bindings = [
             'username'  => $username_customer,
             'saldo'  => $saldo_customer,
+            'user_id_in' => $user_id_customer,
         ];
 
         $result = DB::executeProcedure($procedureName, $bindings);

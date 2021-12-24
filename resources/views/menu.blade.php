@@ -9,6 +9,7 @@
 
     <!--========== CSS ==========-->
     <link rel="stylesheet" href="/assets-front-end/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="/filter/style.css" />
     <link rel="icon" href="/assets/img/delicacy.png" type="image/png">
     <title>Responsive website food</title>
   </head>
@@ -45,18 +46,38 @@
         </div>
       </nav>
     </header>
-
+    
       <!--========== MENU ==========-->
       <section class="menu section bd-container" id="menu">
-        <span class="section-subtitle">Special</span>
-        <h2 class="section-title">Our Menu</h2>
-
-        <div class="menu__container bd-grid">
+        <span class="section-subtitle">Proudly Presents</span>
+        <h2 class="section-title">Delicacy Food Menu</h2>
+        {{-- Start Filter --}}
+        <div class="main">
+            <div class="header">
+                <ul class="indicator">
+                    <li data-filter="all" class="active">
+                        <a href="#">All</a>
+                    </li>
+                    <li data-filter="Dessert"><a href="#">Dessert</a></li>
+                    <li data-filter="Grain"><a href="#">Grain</a></li>
+                    <li data-filter="Vegetables"><a href="#">Vegetables</a></li>
+                    <li data-filter="Drinks"><a href="#">Drinks</a></li>
+                    <li data-filter="Soup"><a href="#">Soup</a></li>
+                    <li data-filter="Pasta"><a href="#">Pasta</a></li>
+                </ul>
+            </div>
+        </div>
+        @php
+        $i = 0;
+        @endphp
+        {{-- End Filter --}}
+        <div class="menu__container bd-grid items">
           @foreach($menu as $result)
-          <div class="menu__content">
+          <div class="menu__content data-category">
             <img src="/upload/{{$result->menu_image}}" alt="" class="menu__img" />
             <h3 class="menu__name">{{$result->menu_name}}</h3>
-            <span class="menu__detail">Stok : {{$result->stok}}</span>
+            <strong style="display: none;">{{$category_name[$i]}}</strong>
+            <span class="menu__detail" style="display:block">Stok : {{$result->stok}}</span>
             <span class="menu__preci">Rp{{number_format($result->harga_menu)}}</span>
             @if(session()->has('hasLogin'))
             <a href="{{route('jumlah_order',$result->menu_id)}}" class="button menu__button"><i class="bx bx-cart-alt"></i></a>
@@ -64,6 +85,9 @@
             <a href="{{route('login')}}" class="button menu__button"><i class="bx bx-cart-alt"></i></a>
             @endif
           </div>
+          @php
+          $i++;
+          @endphp
           @endforeach
         </div>
       </section>
@@ -116,11 +140,9 @@
     </footer>
 
     <!--========== SCROLL REVEAL ==========-->
-    {{-- <script src="https://unpkg.com/scrollreveal"></script>
-    <script>
-        ScrollReveal().reveal('.menu__content', { delay: 1500 });
-    </script> --}}
+    {{-- <script src="https://unpkg.com/scrollreveal"></script> --}}
     <!--========== MAIN JS ==========-->
     <script src="/assets-front-end/js/main.js"></script>
+    <script type="text/javascript" src="/filter/script.js"></script>
   </body>
 </html>

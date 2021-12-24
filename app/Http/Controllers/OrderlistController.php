@@ -78,25 +78,16 @@ class OrderlistController extends Controller
     {
         $orderlist = DB::table('orderlist')->get();
         // Get Driver Name
-        return view('pages.orderlist', compact('orderlist'));
+        return view('pages.orderlist.orderlist', compact('orderlist'));
     }
 
-    public function deleteOrderlist($orderlist_id)
-    {
-        $orderlist = Orderlist::find($orderlist_id);
-        $orderlist->delete();
-        return redirect()->route('orderlist');
-    }
 
     public function detailOrderlist($orderlist_id)
     {
-        $products = DB::table('ordermenu')
-            ->join('menu', function ($join, $orderlist_id) {
-                $join->on('ordermenu.menu_id', '=', 'menu.menu_id')
-                    ->where('ordermenu.orderlist_id', '=', $orderlist_id);
-            })
-            ->get();
-        return view('pages.detailorderlist', compact('products', 'orderlist_id'));
+        $products = DB::select('select * from ordermenu inner join menu on ordermenu.menu_id = menu.menu_id
+        where ordermenu.orderlist_id = ' . $orderlist_id);
+        // dd($products);
+        return view('pages.orderlist.detailorderlist', compact('products', 'orderlist_id'));
     }
 
     public function confirmPayment($orderlist_id)
@@ -106,4 +97,20 @@ class OrderlistController extends Controller
         $orderlist->update();
         return redirect()->route('orderlist');
     }
+
+
+    // public function deleteOrderlist($orderlist_id)
+    // {
+    //     $ordermenu = DB::select('select * from ordermenu where orderlist_id = ' . $orderlist_id);
+    //     // $ordermenu_temp = Ordermenu::find($orderlist_id);
+    //     // dd($ordermenu_temp);
+    //     // $ordermenu_temp->delete();
+
+    //     $orderlist = Orderlist::find($orderlist_id);
+    //     dd($orderlist);
+    //     $orderlist->delete();
+
+    //     return redirect()->route('orderlist');
+    // }
+
 }

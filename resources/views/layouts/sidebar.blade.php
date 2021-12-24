@@ -12,11 +12,15 @@
       <li class="{{ (strpos(Route::currentRouteName(), 'home') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('home')}}"><i class="far fa-square"></i> <span>Blank Page</span></a></li>
       <li class="{{ (strpos(Route::currentRouteName(), 'topup') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('topup')}}"><i class="far fa-credit-card"></i> <span>Top-up</span></a></li>
       <li class="{{ (strpos(Route::currentRouteName(), 'ordermenu') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('ordermenu')}}">&nbsp;<i class="fa fa-table"></i> <span>Ordermenu</span></a></li>
-      <li class="{{ (strpos(Route::currentRouteName(), 'orderlist') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('orderlist')}}">&nbsp;<i class="fa fa-table"></i> <span>Orderlist</span></a></li>
+      <li class="{{ (strpos(Route::currentRouteName(), 'menu') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('menu')}}"><i class="fas fa-utensils"></i> <span>Menu Page</span></a></li>
       
-      @if(session()->get('role') == 'waiter')
-      <li class="{{ (strpos(Route::currentRouteName(), 'history_topup') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('history_topup')}}">&nbsp;<i class="fa fa-table"></i> <span>History Top-up</span></a></li>
-      @endif
+      {{-- @if(session()->get('role') == 'waiter') --}}
+      <li class="{{ (strpos(Route::currentRouteName(), 'orderlist') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('orderlist')}}">&nbsp;<i class="fa fa-table"></i> <span>Orderlist</span></a></li>
+      {{-- @endif --}}
+
+      {{-- @if(session()->get('role') == 'waiter') --}}
+      <li class="{{ (strpos(Route::currentRouteName(), 'history_topup') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('history_topup')}}">&nbsp;<i class="fa fa-table"></i> <span>History Topup</span></a></li>
+      {{-- @endif --}}
 
       <li class="{{ (strpos(Route::currentRouteName(), 'faq') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('faq')}}"><i class="fas fa-columns"></i> <span>FAQ</span></a></li>
       <li class="menu-header">Auth</li>

@@ -1,25 +1,26 @@
 @extends('layouts.master')
-@section('title', 'DataTables')
+@section('title', 'Orderlist')
 @section('content')
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Detail Orderlist</h1>
+      <h1>Orderlist</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="#">Views</a></div>
         <div class="breadcrumb-item"><a href="#">Pages</a></div>
-        <div class="breadcrumb-item">Ordermenu</div>
+        <div class="breadcrumb-item">Orderlist</div>
       </div>
     </div>
 
     <div class="section-body">
       <h2 class="section-title">Page 3</h2>
+      
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>Order Record Table</h4>
+              <h4>Order Record Table -- 2</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -27,47 +28,35 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Menu Name</th>
-                      <th>Menu Price</th>
-                      <th>Qty</th>
-                      <th>Price</th>
+                      <th>Orderlist Id</th>
+                      <th>Order date</th>
+                      <th>Total Price</th>
+                      <th>Process Status</th>
+                      <th>Service Status</th>
+                      <th>Driver</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @php
-                    $totalPrice = 0;
-                    @endphp
-                    @foreach($products as $product)
+                    @foreach($orderlist as $order_list)
                     <tr>
                       <td>{{$loop->iteration}}</td>
-                      <td>{{ $product['item']['menu_name'] }}</td>
-                      <td>Rp. {{ number_format($product['item']['harga_menu']) }}</td>
-                      <td>{{ $product['qty'] }}</td>
-                      <td>Rp. {{ number_format($product['price']) }}</td>
+                      <td>{{ $order_list->orderlist_id }}</td>
+                      <td>{{ date_format(date_create($order_list->order_date),"Y/m/d") }}</td>
+                      <td>Rp. {{ number_format($order_list->total_bayar) }}</td>
+                      <td>{{ $order_list->status_proses }}</td>
+                      <td>{{ $order_list->status_layanan }}</td>
+                      <td>{{ $order_list->driver_id }}</td>
+                      <td>
+                        <form action="{{route('deleteOrderlist',$order_list->orderlist_id)}}" method="POST"> @csrf
+                          <a href="{{route('detailOrderlist', $order_list->orderlist_id)}}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Detail">Detail</a>
+                          {{-- <button class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" onclick="confirm('Are You Sure Wants To Delete it?')"><i class="fas fa-trash"></i></button> --}}
+                        </form>
+                      </td>
                     </tr>
-                    @php
-                    $totalPrice += $product['price'];
-                    @endphp
                     @endforeach
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <th colspan="5">Total Price</th>
-                      <th>Rp. {{number_format($totalPrice)}}</th>
-                    </tr>
-                  </tfoot>
                 </table>
-              </div>
-              <br><br><br>              
-              <div class="text-md-right">
-                <form method="POST" action="{{ route('confirmPayment', $orderlist_id) }}">
-                  <div class="float-lg-left mb-lg-0 mb-3">
-                    <a href="{{route('orderlist')}}" class="btn btn-info btn-icon icon-left"><i class="fas fa-arrow-left"></i> Back to Orderlist</a>
-                  </div>
-                  <div class="float-lg-left mb-lg-0 mb-3 ml-2">
-                      <button type="submit" class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i>Confirm Payment</button>
-                  </div>
-                </form>
               </div>
             </div>
           </div>

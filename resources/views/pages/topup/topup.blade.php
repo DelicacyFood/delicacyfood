@@ -19,11 +19,6 @@
                 <form action="{{ route('topup.custom') }}" method="POST">
                   @csrf
                   <div class="form-group">
-                    <label for="username">Username</label>
-                    <input id="username" type="text" class="form-control" placeholder="Masukkan Username" name="username" tabindex="1" required autofocus />
-                    <div class="invalid-feedback">Please fill in your username</div>
-                  </div>
-                  <div class="form-group">
                     <label for="saldo">Saldo</label>
                     <input id="saldo" type="text" class="form-control" placeholder="Masukkan Saldo" name="saldo" tabindex="2" required autofocus />
                     <div class="invalid-feedback">Please fill in your saldo</div>

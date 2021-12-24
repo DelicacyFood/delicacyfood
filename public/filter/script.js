@@ -24,7 +24,7 @@
                         li[z].style.transform = "scale(0)";
                         setTimeout(() => {
                             li[z].style.display = "none";
-                        }, 500);
+                        }, 300);
 
                         if (
                             li[z].getAttribute("data-category") ==
@@ -34,7 +34,7 @@
                             li[z].style.transform = "scale(1)";
                             setTimeout(() => {
                                 li[z].style.display = "block";
-                            }, 500);
+                            }, 300);
                         }
                     }
                 };

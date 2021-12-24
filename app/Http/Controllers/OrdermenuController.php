@@ -11,22 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class OrdermenuController extends Controller
 {
-    public function ordermenu()
-    {
-        if (!session()->has('cart')) {
-            $customer = DB::selectOne("select totalCustomers as value from dual");
-            $saldo = DB::table('customer')->get();
-            $sales = DB::selectOne("select numberOfOrders as value from dual");
-            echo "<script>alert('No Items in Cart')</script>";
-            return view('pages.dashboard', compact('customer', 'sales'));
-        }
-        return view('pages.ordermenu');
-    }
-
     public function jumlah_order($menu_id)
     {
         $menu = Menu::find($menu_id);
-        return view('pages.jumlah_order', compact('menu'));
+        return view('pages.ordermenu.jumlah_order', compact('menu'));
     }
 
     // public function save_jumlah_order(Request $request, $menu_id)
@@ -57,15 +45,12 @@ class OrdermenuController extends Controller
     public function getCart()
     {
         if (!session()->has('cart')) {
-            $customer = DB::selectOne("select totalCustomers as value from dual");
-            $saldo = DB::table('customer')->get();
-            $sales = DB::selectOne("select numberOfOrders as value from dual");
             echo "<script>alert('No Items in Cart')</script>";
-            return view('pages.dashboard', compact('customer', 'sales'));
+            return redirect()->route('menu');
         }
         $oldCart = session()->get('cart');
         $cart = new Cart($oldCart);
-        return view('pages.ordermenu', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice, 'totalQty' => $cart->totalQty]);
+        return view('pages.ordermenu.ordermenu', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice, 'totalQty' => $cart->totalQty]);
     }
 
     // public function cancelOrdermenu(Request $request, $menu_id)

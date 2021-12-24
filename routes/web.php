@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\OrderlistController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +20,9 @@ Route::get('/menu', 'App\Http\Controllers\MainController@menu')->name('menu');
 // Modules Page
 Route::get('/modules/sweet-alert', 'App\Http\Controllers\MainController@sweetalert')->name('sweetalert');
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Pages
 Route::get('/pages/blank', 'App\Http\Controllers\MainController@home')->name('home');
 Route::get('/pages/dashboard', 'App\Http\Controllers\MainController@dashboard')->name('dashboard');
@@ -30,6 +33,9 @@ Route::get('/pages/history_topup', 'App\Http\Controllers\CustomerController@hist
 Route::get('/pages/faq', 'App\Http\Controllers\MainController@faq')->name('faq');
 Route::get('/pages/credits', 'App\Http\Controllers\MainController@credits')->name('credits');
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ordermenu
 Route::get('/pages/ordermenu', 'App\Http\Controllers\OrdermenuController@getCart')->name('ordermenu');
 // Route::post('/pages/ordermenu/{menu_id}', 'App\Http\Controllers\OrdermenuController@cancelOrdermenu')->name('cancelOrdermenu');
@@ -37,19 +43,38 @@ Route::post('/pages/ordermenu/{menu_id}', 'App\Http\Controllers\OrdermenuControl
 Route::get('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@jumlah_order')->name('jumlah_order');
 Route::post('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@save_jumlah_order')->name('jumlah_order.custom');
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Orderlist
 Route::get('/pages/orderlist', 'App\Http\Controllers\OrderlistController@orderlist')->name('orderlist');
 Route::post('/pages/orderlist', 'App\Http\Controllers\OrderlistController@confirmOrder')->name('confirmOrder');
-Route::post('/pages/orderlist/delete/{$orderlist_id}', 'App\Http\Controllers\OrderlistController@deleteOrderlist')->name('deleteOrderlist');
-Route::get('/pages/orderlist/detail/{$orderlist_id}', 'App\Http\Controllers\OrderlistController@detailOrderlist')->name('detailOrderlist');
-Route::get('/pages/orderlist/detail/{$orderlist_id}', 'App\Http\Controllers\OrderlistController@confirmDetailOrderlist')->name('confirmDetailOrderlist');
-Route::post('/pages/orderlist/detail/confirmpayment/{$orderlist_id}', 'App\Http\Controllers\OrderlistController@confirmPayment')->name('confirmPayment');
+Route::post('/pages/orderlist/delete/{orderlist_id}', 'App\Http\Controllers\OrderlistController@deleteOrderlist')->name('deleteOrderlist');
+Route::get('/pages/orderlist/detail/{orderlist_id}', [OrderlistController::class, 'detailOrderlist'])->name('detailOrderlist');
+Route::post('/pages/orderlist/detail/confirmpayment/{orderlist_id}', [OrderlistController::class, 'confirmPayment'])->name('confirmPayment');
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Auth
-Route::get('/auth/login', 'App\Http\Controllers\AuthController@login')->name('login');
-Route::post('/auth/login', 'App\Http\Controllers\AuthController@authenticate')->name('login.custom');
 Route::post('/auth/logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
-Route::get('/auth/register', 'App\Http\Controllers\AuthController@register')->name('register');
-Route::post('/auth/store', 'App\Http\Controllers\AuthController@store')->name('register.store');
 Route::post('/auth/update_password', 'App\Http\Controllers\AuthController@update_password')->name('update_password');
 Route::get('/auth/edit_profile', 'App\Http\Controllers\AuthController@edit_profile')->name('edit_profile');
+
+// Register dan Login Customer
+Route::get('/auth/register', 'App\Http\Controllers\AuthController@register')->name('register');
+Route::post('/auth/store', 'App\Http\Controllers\AuthController@store')->name('register.store');
+Route::get('/auth/login', 'App\Http\Controllers\AuthController@login')->name('login');
+Route::post('/auth/login', 'App\Http\Controllers\AuthController@authenticate')->name('login.custom');
+
+// Register dan Login Waiter
+Route::get('/auth/register_waiter', 'App\Http\Controllers\AuthController@register_waiter')->name('register.waiter');
+Route::post('/auth/store_waiter', 'App\Http\Controllers\AuthController@store_waiter')->name('register.store.waiter');
+Route::get('/auth/login_waiter', 'App\Http\Controllers\AuthController@login_waiter')->name('login.waiter');
+Route::post('/auth/login_waiter', 'App\Http\Controllers\AuthController@authenticate_waiter')->name('login.custom.waiter');
+
+// Register dan Login Driver
+Route::get('/auth/register_driver', 'App\Http\Controllers\AuthController@register_driver')->name('register.driver');
+Route::post('/auth/store_driver', 'App\Http\Controllers\AuthController@store_driver')->name('register.store.driver');
+Route::get('/auth/login_driver', 'App\Http\Controllers\AuthController@login_driver')->name('login.driver');
+Route::post('/auth/login_driver', 'App\Http\Controllers\AuthController@authenticate_driver')->name('login.custom.driver');

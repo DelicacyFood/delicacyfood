@@ -1,5 +1,5 @@
 @extends('layouts.master-auth')
-@section('title', 'Register')
+@section('title', 'Register Waiter')
 @section('content')
 <!-- Main Content -->
 <div id="app">
@@ -12,10 +12,10 @@
             </div>
 
             <div class="card card-primary">
-              <div class="card-header"><h4>Register</h4></div>
+              <div class="card-header"><h4>Register Waiter</h4></div>
 
               <div class="card-body">
-                <form method="POST" action="{{route('register.store')}}">
+                <form method="POST" action="{{route('register.store.waiter')}}">
                   @csrf
                   <div class="form-row">
                     <div class="form-group col-md-6">
@@ -37,8 +37,8 @@
                       <input type="text" class="form-control" id="rumah" name="alamat" placeholder="Masukan Alamat">
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="saldo">Saldo</label>
-                      <input type="text" class="form-control" id="saldo" name="saldo" placeholder="0" disabled>
+                      <label for="phone">Phone</label>
+                      <input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan No. Telpon">
                     </div>
                   </div>
                   <div class="form-group">

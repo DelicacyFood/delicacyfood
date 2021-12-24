@@ -1,5 +1,5 @@
 @extends('layouts.master-auth')
-@section('title', 'Login')
+@section('title', 'Login Driver')
 @section('content')
 <!-- Main Content -->
 <div id="app">
@@ -33,10 +33,10 @@
               </div>
 
               <div class="card card-primary">
-                <div class="card-header"><h4>Login</h4></div>
+                <div class="card-header"><h4>Login Driver</h4></div>
 
                 <div class="card-body">
-                  <form action="{{ route('login.custom') }}" method="POST" class="needs-validation" novalidate="">
+                  <form action="{{ route('login.custom.driver') }}" method="POST" class="needs-validation" novalidate="">
                     @csrf
                     <div class="form-group">
                       <label for="username">Username</label>
@@ -68,7 +68,7 @@
                   </form>
                 </div>
               </div>
-              <div class="mt-5 text-muted text-center">Don't have an account? <a href="{{route('register')}}">Create One</a></div>
+              <div class="mt-5 text-muted text-center">Don't have an account? <a href="{{route('register.driver')}}">Create One</a></div>
               <div class="mt-5 text-muted text-center">
                 <a href="{{route('dashboard')}}">Back to previous page</a>
               </div>
