@@ -40,6 +40,26 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'driver' => [
+            'driver' => 'session',
+            'provider' => 'driver',
+        ],
+
+        'waiter' => [
+            'driver' => 'session',
+            'provider' => 'waiter',
+        ],
+
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customer',
+        ],
+
+        'cashier' => [
+            'driver' => 'session',
+            'provider' => 'cashier',
+        ],
     ],
 
     /*
@@ -63,6 +83,26 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'waiter' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Users::class,
+        ],
+
+        'customer' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Users::class,
+        ],
+
+        'driver' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Driver::class,
+        ],
+
+        'cashier' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Users::class,
         ],
 
         // 'users' => [

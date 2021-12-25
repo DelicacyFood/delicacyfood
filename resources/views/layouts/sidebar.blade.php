@@ -11,7 +11,9 @@
       <li class="{{ (strpos(Route::currentRouteName(), 'dashboard') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('dashboard')}}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
       <li class="{{ (strpos(Route::currentRouteName(), 'home') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('home')}}"><i class="far fa-square"></i> <span>Blank Page</span></a></li>
       <li class="{{ (strpos(Route::currentRouteName(), 'topup') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('topup')}}"><i class="far fa-credit-card"></i> <span>Top-up</span></a></li>
+      @if(Auth::guard('driver')->user())
       <li class="{{ (strpos(Route::currentRouteName(), 'ordermenu') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('ordermenu')}}">&nbsp;<i class="fa fa-table"></i> <span>Ordermenu</span></a></li>
+      @endif
       <li class="{{ (strpos(Route::currentRouteName(), 'menu') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('menu')}}"><i class="fas fa-utensils"></i> <span>Menu Page</span></a></li>
       
       {{-- @if(session()->get('role') == 'waiter') --}}
