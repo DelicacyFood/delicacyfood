@@ -33,6 +33,17 @@ class OrdermenuController extends Controller
     {
         $menu = Menu::find($menu_id);
         $jumlah_order = $request->jumlah_order;
+
+        // Check Available Stock
+        if ($jumlah_order > $menu->stok) {
+            echo "<script>alert('Jumlah Order Melebihi Stok');</script>";
+            return redirect('/menu');
+        }
+
+        // Stock Update
+        $menu->stok = $menu->stok - $jumlah_order;
+        $menu->update();
+
         $oldCart = session()->has('cart') ? session()->get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->add($menu, $menu->menu_id, $jumlah_order);
@@ -77,5 +88,20 @@ class OrdermenuController extends Controller
         } else {
             return redirect()->route('menu');
         }
+    }
+
+    public function invoice()
+    {
+        $orderlist_id = DB::selectOne("select getCurrentId('orderlist') as value from dual")->value;
+        $customer_name = session()->get('username');
+        $customer_address = session()->get('customer_address');
+        $tanggal_pemesanan = date("Y-m-d");
+        if (!session()->has('cart')) {
+            echo "<script>alert('No Items in Cart')</script>";
+            return redirect()->route('menu');
+        }
+        $oldCart = session()->get('cart');
+        $cart = new Cart($oldCart);
+        return view('pages.ordermenu.invoice', ['customer_address' => $customer_address, 'customer_name' => $customer_name, 'order_date' => $tanggal_pemesanan, 'orderlist_id' => $orderlist_id, 'products' => $cart->items, 'totalPrice' => $cart->totalPrice, 'totalQty' => $cart->totalQty]);
     }
 }

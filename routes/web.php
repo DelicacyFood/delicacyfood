@@ -17,6 +17,7 @@ use App\Http\Controllers\OrderlistController;
 Route::get('/', 'App\Http\Controllers\MainController@index')->name('start');
 Route::get('/menu', 'App\Http\Controllers\MainController@menu')->name('menu');
 
+
 // Modules Page
 Route::get('/modules/sweet-alert', 'App\Http\Controllers\MainController@sweetalert')->name('sweetalert');
 
@@ -49,6 +50,9 @@ Route::post('/pages/ordermenu/{menu_id}', 'App\Http\Controllers\OrdermenuControl
 Route::get('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@jumlah_order')->name('jumlah_order');
 Route::post('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuController@save_jumlah_order')->name('jumlah_order.custom');
 
+// Invoice Page
+Route::get('/pages/invoice', 'App\Http\Controllers\OrdermenuController@invoice')->name('invoice');
+Route::post('/pages/invoice/{totalPrice}', [OrderlistController::class, 'confirmPaymentCustomer'])->name('confirmPaymentCustomer');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,3 +88,9 @@ Route::get('/auth/register_driver', 'App\Http\Controllers\AuthController@registe
 Route::post('/auth/store_driver', 'App\Http\Controllers\AuthController@store_driver')->name('register.store.driver');
 Route::get('/auth/login_driver', 'App\Http\Controllers\AuthController@login_driver')->name('login.driver');
 Route::post('/auth/login_driver', 'App\Http\Controllers\AuthController@authenticate_driver')->name('login.custom.driver');
+
+
+// Driver Page
+Route::get('/pages/driver_page', 'App\Http\Controllers\DriverController@driver_page')->name('driver_page');
+Route::get('/pages/driver/detail/{orderlist_id}', 'App\Http\Controllers\DriverController@detailDriver')->name('detailDriver');
+Route::post('/pages/driver/detail/delivery_confirm/{orderlist_id}', 'App\Http\Controllers\DriverController@deliveryConfirm')->name('deliveryConfirm');

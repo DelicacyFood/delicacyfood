@@ -46,21 +46,29 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        $query = DB::select('select users.user_id, users.username, users.password from users inner join customer on customer.user_id = users.user_id where users.username = ?', [$credentials['username']]);
+        // dd($query);
         // Session User_id, Username, hasLogin, and Role
+        if (!$query) {
+            return back()->with('loginError', 'Login Failed!');
+        }
         $request->session()->put('username', $credentials['username']);
         $username_user = $credentials['username'];
         $role_user = DB::selectOne("select getRoleUser('$username_user') as value from dual")->value;
         $user_id = DB::selectOne("select getUserId('$username_user') as value from dual")->value;
-        if (Auth::attempt($credentials)) {
+        $address_customer = DB::selectOne("select getAddressUser('$user_id') as value from dual")->value;
+
+        $isCustomer = Customer::where('user_id', $query[0]->user_id)->first();
+        if ($isCustomer && Hash::check($credentials['password'], $query[0]->password)) {
             $request->session()->put('hasLogin', 'true');
             $request->session()->put('role', $role_user);
             $request->session()->put('username', $username_user);
+            $request->session()->put('customer_address', $address_customer);
             $request->session()->put('user_id', $user_id);
-            $request->session()->regenerate();
             return redirect()->intended('pages/dashboard');
+        } else {
+            return back()->with('loginError', 'Login Failed!');
         }
-
-        return back()->with('loginError', 'Login Failed!');
     }
 
     // Logout
@@ -159,21 +167,27 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        $query = DB::select('select users.user_id, users.username, users.password from users inner join waiter on waiter.user_id = users.user_id where users.username = ?', [$credentials['username']]);
+        // dd($query);
         // Session User_id, Username, hasLogin, and Role
+        if (!$query) {
+            return back()->with('loginError', 'Login Failed!');
+        }
         $request->session()->put('username', $credentials['username']);
         $username_user = $credentials['username'];
         $role_user = DB::selectOne("select getRoleUser('$username_user') as value from dual")->value;
         $user_id = DB::selectOne("select getUserId('$username_user') as value from dual")->value;
-        if (Auth::attempt($credentials)) {
+
+        $isWaiter = Waiter::where('user_id', $query[0]->user_id)->first();
+        if ($isWaiter && Hash::check($credentials['password'], $query[0]->password)) {
             $request->session()->put('hasLogin', 'true');
             $request->session()->put('role', $role_user);
             $request->session()->put('username', $username_user);
             $request->session()->put('user_id', $user_id);
-            $request->session()->regenerate();
             return redirect()->intended('pages/dashboard');
+        } else {
+            return back()->with('loginError', 'Login Failed!');
         }
-
-        return back()->with('loginError', 'Login Failed!');
     }
 
 
@@ -227,26 +241,18 @@ class AuthController extends Controller
         ]);
 
         // Session User_id, Username, hasLogin, and Role
-        $username_user = $credentials['username'];
-        $password_user = DB::selectOne("SELECT password FROM driver WHERE driver_name = '$username_user'");
-        dd($password_user);
-
-        // Cek Driver
-        $cek_data = DB::selectOne("SELECT * FROM driver WHERE driver_name = '$username_user' AND password = '$password_user'");
-        dd($cek_data);
-
         $request->session()->put('username', $credentials['username']);
-        $role_user = DB::selectOne("select getRoleUser('$username_user') as value from dual")->value;
-        $user_id = DB::selectOne("select getUserId('$username_user') as value from dual")->value;
-        if (Auth::attempt($credentials)) {
-            $request->session()->put('hasLogin', 'true');
-            $request->session()->put('role', $role_user);
-            $request->session()->put('username', $username_user);
-            $request->session()->put('user_id', $user_id);
-            $request->session()->regenerate();
-            return redirect()->intended('pages/dashboard');
-        }
+        $username_user = $credentials['username'];
 
-        return back()->with('loginError', 'Login Failed!');
+        $isDriver = Driver::where('driver_name', $credentials['username'])->first();
+        if ($isDriver && Hash::check($credentials['password'], $isDriver->password)) {
+            $request->session()->put('hasLogin', 'true');
+            $request->session()->put('role', 'driver');
+            $request->session()->put('username', $username_user);
+            $request->session()->put('user_id', $isDriver->driver_id);
+            return redirect()->intended('pages/dashboard');
+        } else {
+            return back()->with('loginError', 'Login Failed!');
+        }
     }
 }

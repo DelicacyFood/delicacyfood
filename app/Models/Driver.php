@@ -4,12 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Driver extends Authenticatable
+class Driver extends Model
 {
-    use SoftDeletes;
     use HasFactory;
 
     protected $guarded = [];

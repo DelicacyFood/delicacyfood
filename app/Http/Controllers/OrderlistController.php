@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Orderlist;
 use App\Cart;
 use App\Models\Ordermenu;
+use App\Models\Customer;
+use App\Models\Driver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +28,7 @@ class OrderlistController extends Controller
         // Insert Data Sales to Orderlist Table
         $orderlist = new Orderlist;
         $orderlist->orderlist_id = DB::selectOne("select getNewId('orderlist') as value from dual")->value;
-
+        $request->session()->put('orderlist_id_confirm', $orderlist->orderlist_id);
         // Get Total Bayar
         $oldCart = session()->get('cart');
         $cart = new Cart($oldCart);
@@ -70,8 +72,7 @@ class OrderlistController extends Controller
             $ordermenu->save();
         }
 
-        session()->forget('cart');
-        return redirect()->route('dashboard');
+        return redirect()->route('invoice');
     }
 
     public function orderlist()
@@ -98,7 +99,21 @@ class OrderlistController extends Controller
         return redirect()->route('orderlist');
     }
 
+    public function confirmPaymentCustomer($totalPrice)
+    {
+        $customer_user_id = session()->get('user_id');
+        $customer = Customer::find($customer_user_id);
+        $customer->saldo = $customer->saldo - $totalPrice;
+        $customer->update();
 
+
+        $orderlist_id = session()->get('orderlist_id_confirm');
+        $orderlist = Orderlist::find($orderlist_id);
+        $orderlist->status_proses = 'Payment Pending';
+        $orderlist->update();
+        session()->forget('cart');
+        return redirect()->route('orderlist');
+    }
     // public function deleteOrderlist($orderlist_id)
     // {
     //     $ordermenu = DB::select('select * from ordermenu where orderlist_id = ' . $orderlist_id);
