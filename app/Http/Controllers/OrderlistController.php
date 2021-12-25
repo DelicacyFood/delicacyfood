@@ -112,7 +112,7 @@ class OrderlistController extends Controller
         $orderlist->status_proses = 'Payment Pending';
         $orderlist->update();
         session()->forget('cart');
-        return redirect()->route('orderlist');
+        return redirect()->route('dashboard');
     }
     // public function deleteOrderlist($orderlist_id)
     // {
