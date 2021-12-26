@@ -200,9 +200,11 @@
             <div class="d-sm-none d-lg-inline-block">Hi, {{ session()->get('username') }}</div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">Logged few minutes ago</div>
-              <a href="{{route('edit_profile')}}" class="dropdown-item has-icon">
+              @if(session()->get('role') == 'customer')
+              <a href="{{route('profile')}}" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
               </a>
+              @endif
               <div class="dropdown-divider"></div>
               <form action="{{ route('logout') }}" method="POST">
                 @csrf

@@ -43,7 +43,9 @@
           @if(!session()->has('hasLogin'))
           <li class="{{ (strpos(Route::currentRouteName(), 'login') === 0) ? 'active' : '' }}"><a href="{{route('login')}}">Login</a></li> 
           @else
-          <li class="{{ (strpos(Route::currentRouteName(), 'edit_profile') === 0) ? 'active' : '' }}"><a href="{{route('edit_profile')}}">Edit Profile</a></li> 
+          @if(session()->get('role') == 'customer')
+          <li class="{{ (strpos(Route::currentRouteName(), 'profile') === 0) ? 'active' : '' }}"><a href="{{route('profile')}}">Profile</a></li> 
+          @endif
           <li class="{{ (strpos(Route::currentRouteName(), 'update_password') === 0) ? 'active' : '' }}"><a href="{{route('update_password')}}">Update Password</a></li> 
           <li class="{{ (strpos(Route::currentRouteName(), 'register') === 0) ? 'active' : '' }}"><a href="{{route('register')}}">Register</a></li> 
           @endif

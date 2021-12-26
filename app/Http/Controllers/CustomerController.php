@@ -149,6 +149,6 @@ class CustomerController extends Controller
             echo '<script>alert("Top up sudah dilakukan")</script>';
         }
 
-        return redirect('pages/dashboard')->with('success', 'Registration Success! Please Login');
+        return redirect('pages/history_topup')->with('success', 'Registration Success! Please Login');
     }
 }

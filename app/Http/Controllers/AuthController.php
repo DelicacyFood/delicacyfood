@@ -33,9 +33,13 @@ class AuthController extends Controller
         return view('auth.update_password');
     }
 
-    public function edit_profile()
+    public function profile()
     {
-        return view('auth.edit_profile');
+        $customer_id = session()->get('user_id');
+        $customer_name = session()->get('username');
+        // get saldo from customer table
+        $saldo = DB::select('select customer.saldo from customer inner join users on users.user_id = ?', [$customer_id])[0]->saldo;
+        return view('auth.profile', compact('customer_name', 'saldo', 'customer_id'));
     }
 
     // Authenticate

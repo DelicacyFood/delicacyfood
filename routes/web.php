@@ -69,7 +69,7 @@ Route::post('/pages/orderlist/detail/confirmpayment/{orderlist_id}', [OrderlistC
 // Auth
 Route::post('/auth/logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
 Route::post('/auth/update_password', 'App\Http\Controllers\AuthController@update_password')->name('update_password');
-Route::get('/auth/edit_profile', 'App\Http\Controllers\AuthController@edit_profile')->name('edit_profile');
+Route::get('/auth/profile', 'App\Http\Controllers\AuthController@profile')->name('profile');
 
 // Register dan Login Customer
 Route::get('/auth/register', 'App\Http\Controllers\AuthController@register')->name('register');
