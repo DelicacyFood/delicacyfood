@@ -38,7 +38,7 @@ Route::get('/pages/credits', 'App\Http\Controllers\MainController@credits')->nam
 Route::get('/pages/topup', 'App\Http\Controllers\CustomerController@topup')->name('topup');
 Route::post('/pages/topup', 'App\Http\Controllers\CustomerController@isi_saldo')->name('topup.custom');
 Route::get('/pages/history_topup', 'App\Http\Controllers\CustomerController@history_topup')->name('history_topup');
-Route::post('/pages/history_topup/{saldo}/{topup_id}', 'App\Http\Controllers\CustomerController@store_saldo')->name('store_saldo');
+Route::post('/pages/history_topup/{saldo}/{topup_id}/{customer_user_id}', 'App\Http\Controllers\CustomerController@store_saldo')->name('store_saldo');
 
 
 

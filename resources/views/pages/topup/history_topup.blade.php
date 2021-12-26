@@ -46,7 +46,7 @@
                        <td>Rp. {{ number_format($history_topup->jumlah_topup) }}</td>
                       <td>{{ $history_topup->status_topup }}</td>
                       <td>
-                        <form action="{{route('store_saldo', [$history_topup->jumlah_topup, $history_topup->history_topup_id])}}" method="POST"> @csrf
+                        <form action="{{route('store_saldo', [$history_topup->jumlah_topup, $history_topup->history_topup_id, $history_topup->customer_user_id,])}}" method="POST"> @csrf
                           <button class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Confirm" onclick="confirm('Are You Sure Wants To Confirm it?')">Confirm</button>
                         </form>
                       </td>

@@ -118,29 +118,29 @@ class CustomerController extends Controller
 
         $history_topup->save();
 
-        return redirect('pages/history_topup')->with('success', 'Registration Success! Please Login');
+        return redirect('pages/dashboard')->with('success', 'Registration Success! Please Login');
     }
 
 
     // Store ke Saldo Customer
-    public function store_saldo($saldo, $topup_id)
+    public function store_saldo($saldo, $topup_id, $customer_user_id)
     {
         $history = DB::select('select status_topup from history_topup where history_topup_id = ?', [$topup_id]);
         $status_topup = $history[0]->status_topup;
         if ($status_topup == 'Pending') {
-            $username_customer = session()->get('username');
-            $user_id_customer = session()->get('user_id');
+            $user_id_customer = $customer_user_id;
+            $username_customer = DB::selectOne("select getUsername('$customer_user_id') as value from dual")->value;
             $saldo_customer = $saldo;
 
             $procedureName = 'topupSaldo';
 
             $bindings = [
-                'username'  => $username_customer,
-                'saldo'  => $saldo_customer,
+                'username_in'  => $username_customer,
+                'saldo_in'  => $saldo_customer,
                 'user_id_in' => $user_id_customer,
             ];
 
-            $result = DB::executeProcedure($procedureName, $bindings);
+            DB::executeProcedure($procedureName, $bindings);
 
             $history_topup = History_Topup::find($topup_id);
             $history_topup->status_topup = 'Top up Completed';
@@ -149,6 +149,6 @@ class CustomerController extends Controller
             echo '<script>alert("Top up sudah dilakukan")</script>';
         }
 
-        return redirect('pages/history_topup')->with('success', 'Registration Success! Please Login');
+        return redirect('pages/dashboard')->with('success', 'Registration Success! Please Login');
     }
 }
