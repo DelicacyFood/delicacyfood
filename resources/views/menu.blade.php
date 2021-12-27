@@ -46,7 +46,6 @@
         </div>
       </nav>
     </header>
-    
       <!--========== MENU ==========-->
       <section class="menu section bd-container" id="menu">
         <span class="section-subtitle">Proudly Presents</span>
@@ -146,3 +145,16 @@
     <script type="text/javascript" src="/filter/script.js"></script>
   </body>
 </html>
+
+{{-- Alert --}}
+@if (session()->has('notEnoughStock'))
+  @php
+  echo '<script type="text/javascript">alert("Stock is not enough!");</script>';
+  @endphp
+@endif
+
+@if (session()->has('noIteminCart'))
+  @php
+  echo '<script type="text/javascript">alert("No Items in Cart! Please add some items");</script>';
+  @endphp
+@endif

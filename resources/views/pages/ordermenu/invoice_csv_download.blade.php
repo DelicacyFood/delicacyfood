@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Invoice')
+@section('title', 'Invoice CSV Download')
 @section('content')
 <!-- Main Content -->
 <div class="main-content">
@@ -54,10 +54,8 @@
               <div class="col-md-12">
                 <div class="section-title">Order Summary</div>
                 <p class="section-lead">All items here cannot be deleted.</p>
-                <form action="{{ route('confirmPaymentCustomer',$totalPrice) }}" method="POST">
-                @csrf
                 <div class="table-responsive">
-                  <table class="table table-striped table-hover table-md">
+                  <table class="table table-striped" id="invoice-csv-download">
                     <thead>
                       <tr>
                         <th data-width="40">No</th>
@@ -110,12 +108,9 @@
           <hr>
           <div class="text-md-right">
             <div class="float-lg-left mb-lg-0 mb-3">
-              <button  type="submit"  class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
-              <a href="{{route('menu')}}" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</a>
+              <a href="{{route('menu')}}" class="btn btn-info btn-icon icon-left"><i class="fas fa-arrow-left"></i> Back to Menu Page</a>
             </div>
-            {{-- <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button> --}}
           </div>
-          </form>
         </div>
       </div>
     </section>
@@ -128,3 +123,21 @@
 @endif
 
 @endsection
+
+<!-- push JavaScript -->
+@push('scripts')
+<script type="text/javascript" src="/index-table/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/index-table/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/index-table/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="/index-table/js/jszip.min.js"></script>
+<script type="text/javascript" src="/index-table/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="/index-table/js/substable.js"></script>
+@endpush
+
+<!-- Push CSS -->
+@push('css')
+<!-- CSS Libraries -->
+<link rel="stylesheet" type="text/css" href="/index-table/css/dataTables.bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/index-table/css/buttons.dataTables.min.css" />
+{{-- <link rel="stylesheet" type="text/css" href="/index-table/css/styles.css" /> --}}
+@endpush

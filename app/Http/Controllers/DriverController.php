@@ -35,6 +35,6 @@ class DriverController extends Controller
         $orderlist->status_proses = 'Order Delivered';
         $orderlist->driver_id = session()->get('user_id');
         $orderlist->update();
-        return redirect()->route('driver_page');
+        return redirect()->route('driver_page')->with('confirmDelivered', 'Order Delivered! Please Check Your Orderlist');
     }
 }

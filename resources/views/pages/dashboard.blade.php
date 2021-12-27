@@ -45,4 +45,18 @@
     </div>
   </section>
 </div>
+
+{{-- Alert --}}
+@if (session()->has('successTopUp'))
+  @php
+  echo '<script type="text/javascript">alert("Top up Success! Please wait for cashier approval");</script>';
+  @endphp
+@endif
+
+@if (session()->has('confirmPaymentCustomer'))
+  @php
+  echo '<script type="text/javascript">alert("Payment Success! Please wait for the driver to confirm your order");</script>';
+  @endphp
+@endif
+
 @endsection

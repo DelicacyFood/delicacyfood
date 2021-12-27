@@ -118,7 +118,7 @@ class CustomerController extends Controller
 
         $history_topup->save();
 
-        return redirect('pages/dashboard')->with('success', 'Registration Success! Please Login');
+        return redirect()->route('dashboard')->with('successTopUp', 'Top up Success! Please wait for cashier approval');
     }
 
 
@@ -145,10 +145,8 @@ class CustomerController extends Controller
             $history_topup = History_Topup::find($topup_id);
             $history_topup->status_topup = 'Top up Completed';
             $history_topup->update();
-        } else {
-            echo '<script>alert("Top up sudah dilakukan")</script>';
         }
 
-        return redirect('pages/history_topup')->with('success', 'Registration Success! Please Login');
+        return redirect('pages/history_topup')->with('topUpConfirmed', 'Top up Confirmed!');
     }
 }

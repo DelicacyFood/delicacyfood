@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Invoice')
+@section('title', 'Invoice CSV Download')
 @section('content')
 <!-- Main Content -->
 <div class="main-content">
@@ -43,7 +43,7 @@
                   <div class="col-md-6 text-md-right">
                     <address>
                       <strong>Order Date:</strong><br>
-                      {{$order_date}}<br><br>
+                      {{ date_format(date_create($order_date),"Y/m/d") }}<br><br>
                     </address>
                   </div>
                 </div>
@@ -54,10 +54,8 @@
               <div class="col-md-12">
                 <div class="section-title">Order Summary</div>
                 <p class="section-lead">All items here cannot be deleted.</p>
-                <form action="{{ route('confirmPaymentCustomer',$totalPrice) }}" method="POST">
-                @csrf
                 <div class="table-responsive">
-                  <table class="table table-striped table-hover table-md">
+                  <table class="table table-striped" id="detail-sales-record">
                     <thead>
                       <tr>
                         <th data-width="40">No</th>
@@ -68,14 +66,26 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @php
+                        $totalPrice = 0;
+                        $totalQty = 0;
+                      @endphp
                       @foreach($products as $product)
-                      <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{ $product['item']['menu_name'] }}</td>
-                        <td class="text-center">Rp. {{ number_format($product['item']['harga_menu']) }}</td>
-                        <td class="text-center">{{ $product['qty'] }}</td>
-                        <td class="text-right">Rp. {{ number_format($product['price']) }}</td>
-                      </tr>
+                        @php
+                          $temp_price = 0;
+                          $temp_price += $product->harga_menu * $product->jumlah_order;
+                        @endphp
+                          <tr>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{ $product->menu_name }}</td>
+                            <td>Rp. {{ number_format($product->harga_menu) }}</td>
+                            <td>{{ $product->jumlah_order }}</td>
+                            <td>Rp. {{ number_format($temp_price) }}</td>
+                          </tr>
+                        @php
+                          $totalQty += $product->jumlah_order;
+                          $totalPrice += $temp_price;
+                        @endphp
                       @endforeach
                     </tbody>
                   </table>
@@ -110,12 +120,9 @@
           <hr>
           <div class="text-md-right">
             <div class="float-lg-left mb-lg-0 mb-3">
-              <button  type="submit"  class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
-              <a href="{{route('menu')}}" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</a>
+              <a href="{{route('sales_record')}}" class="btn btn-info btn-icon icon-left"><i class="fas fa-arrow-left"></i> Back to Previous Page</a>
             </div>
-            {{-- <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button> --}}
           </div>
-          </form>
         </div>
       </div>
     </section>
@@ -128,3 +135,21 @@
 @endif
 
 @endsection
+
+<!-- push JavaScript -->
+@push('scripts')
+<script type="text/javascript" src="/index-table/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/index-table/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/index-table/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="/index-table/js/jszip.min.js"></script>
+<script type="text/javascript" src="/index-table/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="/index-table/js/substable.js"></script>
+@endpush
+
+<!-- Push CSS -->
+@push('css')
+<!-- CSS Libraries -->
+<link rel="stylesheet" type="text/css" href="/index-table/css/dataTables.bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/index-table/css/buttons.dataTables.min.css" />
+{{-- <link rel="stylesheet" type="text/css" href="/index-table/css/styles.css" /> --}}
+@endpush

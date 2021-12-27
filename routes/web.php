@@ -52,8 +52,12 @@ Route::post('/pages/jumlah_order/{menu_id}', 'App\Http\Controllers\OrdermenuCont
 
 // Invoice Page
 Route::get('/pages/invoice', 'App\Http\Controllers\OrdermenuController@invoice')->name('invoice');
-Route::post('/pages/invoice/{totalPrice}', [OrderlistController::class, 'confirmPaymentCustomer'])->name('confirmPaymentCustomer');
+Route::post('/pages/invoice/{totalPrice}', 'App\Http\Controllers\OrdermenuController@confirmPaymentCustomer')->name('confirmPaymentCustomer');
+Route::get('/pages/invoice/invoice_csv_download', 'App\Http\Controllers\OrdermenuController@invoice_csv_download')->name('invoice_csv_download');
 
+// Sales Record
+Route::get('/pages/sales_record', 'App\Http\Controllers\OrdermenuController@sales_record')->name('sales_record');
+Route::get('/pages/sales_record/detail/{orderlist_id}', 'App\Http\Controllers\OrdermenuController@detail_sales_record')->name('detail_sales_record');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Orderlist
@@ -62,14 +66,17 @@ Route::post('/pages/orderlist', 'App\Http\Controllers\OrderlistController@confir
 Route::post('/pages/orderlist/delete/{orderlist_id}', 'App\Http\Controllers\OrderlistController@deleteOrderlist')->name('deleteOrderlist');
 Route::get('/pages/orderlist/detail/{orderlist_id}', [OrderlistController::class, 'detailOrderlist'])->name('detailOrderlist');
 Route::post('/pages/orderlist/detail/confirmpayment/{orderlist_id}', [OrderlistController::class, 'confirmPayment'])->name('confirmPayment');
-
+// Orderlist Manager
+Route::get('/pages/orderlist_manager', 'App\Http\Controllers\OrderlistController@orderlist_manager')->name('orderlist_manager');
+Route::get('/pages/orderlist_manager/detail/{orderlist_id}', [OrderlistController::class, 'detailOrderlist_manager'])->name('detailOrderlist_manager');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Auth
 Route::post('/auth/logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
-Route::post('/auth/update_password', 'App\Http\Controllers\AuthController@update_password')->name('update_password');
+Route::get('/auth/update_password', 'App\Http\Controllers\AuthController@update_password')->name('update_password');
 Route::get('/auth/profile', 'App\Http\Controllers\AuthController@profile')->name('profile');
+Route::post('/auth/edit_profile', 'App\Http\Controllers\AuthController@edit_profile')->name('edit_profile');
 
 // Register dan Login Customer
 Route::get('/auth/register', 'App\Http\Controllers\AuthController@register')->name('register');
@@ -82,6 +89,13 @@ Route::get('/auth/register_waiter', 'App\Http\Controllers\AuthController@registe
 Route::post('/auth/store_waiter', 'App\Http\Controllers\AuthController@store_waiter')->name('register.store.waiter');
 Route::get('/auth/login_waiter', 'App\Http\Controllers\AuthController@login_waiter')->name('login.waiter');
 Route::post('/auth/login_waiter', 'App\Http\Controllers\AuthController@authenticate_waiter')->name('login.custom.waiter');
+
+// Register dan Login Manager
+Route::get('/auth/register_manager', 'App\Http\Controllers\AuthController@register_manager')->name('register.manager');
+Route::post('/auth/store_manager', 'App\Http\Controllers\AuthController@store_manager')->name('register.store.manager');
+Route::get('/auth/login_manager', 'App\Http\Controllers\AuthController@login_manager')->name('login.manager');
+Route::post('/auth/login_manager', 'App\Http\Controllers\AuthController@authenticate_manager')->name('login.custom.manager');
+
 
 // Register dan Login Driver
 Route::get('/auth/register_driver', 'App\Http\Controllers\AuthController@register_driver')->name('register.driver');

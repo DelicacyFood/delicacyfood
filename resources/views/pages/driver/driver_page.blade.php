@@ -67,6 +67,13 @@
     </div>
   </section>
 </div>
+
+@if (session()->has('confirmDelivered'))
+  @php
+  echo '<script type="text/javascript">alert("Order Delivered! Please Check Your Orderlist");</script>';
+  @endphp
+@endif
+
 @endsection
 
 <!-- push JavaScript -->

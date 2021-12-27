@@ -18,6 +18,10 @@
       @if(session()->get('role') == 'customer')
       <li class="{{ (strpos(Route::currentRouteName(), 'ordermenu') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('ordermenu')}}">&nbsp;<i class="fa fa-table"></i> <span>Ordermenu</span></a></li>
       @endif
+      
+      @if(session()->get('role') == 'customer')
+      <li class="{{ (strpos(Route::currentRouteName(), 'sales_record') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('sales_record')}}"><i class="fas fa-money-bill-wave"></i> <span>Sales Record</span></a></li>
+      @endif
 
       @if(session()->get('role') == 'customer' || session()->get('role') == 'waiter')
       <li class="{{ (strpos(Route::currentRouteName(), 'menu') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('menu')}}"><i class="fas fa-utensils"></i> <span>Menu Page</span></a></li>
@@ -29,6 +33,10 @@
 
       @if(session()->get('role') == 'waiter')
       <li class="{{ (strpos(Route::currentRouteName(), 'orderlist') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('orderlist')}}">&nbsp;<i class="fa fa-table"></i> <span>Orderlist</span></a></li>
+      @endif
+      
+      @if(session()->get('role') == 'manager')
+      <li class="{{ (strpos(Route::currentRouteName(), 'orderlist_manager') === 0) ? 'active' : '' }}"><a class="nav-link" href="{{route('orderlist_manager')}}"><i class="fas fa-money-bill-wave"></i> <span>Restaurant Sales Record</span></a></li>
       @endif
 
       @if(session()->get('role') == 'waiter')

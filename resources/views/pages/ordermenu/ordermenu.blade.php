@@ -124,3 +124,10 @@
 <link rel="stylesheet" href="{{asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css')}}">
 @endpush
+
+{{-- Alert --}}
+@if (session()->has('notEnoughSaldo'))
+  @php
+  echo '<script type="text/javascript">alert("Saldo is not enough!");</script>';
+  @endphp
+@endif

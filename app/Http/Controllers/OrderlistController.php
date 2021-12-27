@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class OrderlistController extends Controller
 {
+    // Konfirmasi pemesanan menu oleh Customer di Cart Page
     public function confirmOrder(Request $request)
     {
         $tanggal_pemesanan = date("Y-m-d");
@@ -35,6 +36,14 @@ class OrderlistController extends Controller
         $orderlist->total_bayar = $cart->totalPrice;
 
         $orderlist->order_date = $tanggal_pemesanan;
+
+        // Saldo Check
+        $customer_user_id = session()->get('user_id');
+        $customer = Customer::find($customer_user_id);
+
+        if ($customer->saldo < $orderlist->total_bayar) {
+            return redirect()->route('ordermenu')->with('notEnoughSaldo', 'Saldo is not enough');
+        }
 
         // Get Customer and Waiter ID
         if ($temp_param == 'true') {
@@ -72,9 +81,10 @@ class OrderlistController extends Controller
             $ordermenu->save();
         }
 
-        return redirect()->route('invoice');
+        return redirect()->route('invoice')->with('confirmOrder', 'Order Confirmed! Please purchase your order!');
     }
 
+    // Halaman Orderlist Waiter
     public function orderlist()
     {
         $orderlist = DB::table('orderlist')->get();
@@ -82,7 +92,7 @@ class OrderlistController extends Controller
         return view('pages.orderlist.orderlist', compact('orderlist'));
     }
 
-
+    // Halaman Orderlist Confirmasi Detail
     public function detailOrderlist($orderlist_id)
     {
         $products = DB::select('select * from ordermenu inner join menu on ordermenu.menu_id = menu.menu_id
@@ -91,29 +101,15 @@ class OrderlistController extends Controller
         return view('pages.orderlist.detailorderlist', compact('products', 'orderlist_id'));
     }
 
+    // Konfirmasi pembayaran sudah dilakukan oleh pembayaranwaiter
     public function confirmPayment($orderlist_id)
     {
         $orderlist = Orderlist::find($orderlist_id);
         $orderlist->status_proses = 'Payment Completed';
         $orderlist->update();
-        return redirect()->route('orderlist');
+        return redirect()->route('orderlist')->with('confirmPaymentWaiter', 'Confirm Payment Success!');
     }
 
-    public function confirmPaymentCustomer($totalPrice)
-    {
-        $customer_user_id = session()->get('user_id');
-        $customer = Customer::find($customer_user_id);
-        $customer->saldo = $customer->saldo - $totalPrice;
-        $customer->update();
-
-
-        $orderlist_id = session()->get('orderlist_id_confirm');
-        $orderlist = Orderlist::find($orderlist_id);
-        $orderlist->status_proses = 'Payment Pending';
-        $orderlist->update();
-        session()->forget('cart');
-        return redirect()->route('dashboard');
-    }
     // public function deleteOrderlist($orderlist_id)
     // {
     //     $ordermenu = DB::select('select * from ordermenu where orderlist_id = ' . $orderlist_id);
@@ -128,4 +124,22 @@ class OrderlistController extends Controller
     //     return redirect()->route('orderlist');
     // }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////  Urusan Manager
+    // Halaman Orderlist Manger
+    public function orderlist_manager()
+    {
+        $orderlist = DB::table('orderlist')->get();
+        // Get Driver Name
+        return view('pages.orderlist.orderlist_manager', compact('orderlist'));
+    }
+
+    // Halaman Orderlist Detail
+    public function detailOrderlist_manager($orderlist_id)
+    {
+        $products = DB::select('select * from ordermenu inner join menu on ordermenu.menu_id = menu.menu_id
+        where ordermenu.orderlist_id = ' . $orderlist_id);
+        // dd($products);
+        return view('pages.orderlist.detailorderlist_manager', compact('products', 'orderlist_id'));
+    }
 }

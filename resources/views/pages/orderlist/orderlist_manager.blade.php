@@ -1,15 +1,15 @@
 @extends('layouts.master')
-@section('title', 'Orderlist')
+@section('title', 'Orderlist Manager')
 @section('content')
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Orderlist</h1>
+      <h1>Orderlist Manager</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="#">Views</a></div>
         <div class="breadcrumb-item"><a href="#">Pages</a></div>
-        <div class="breadcrumb-item">Orderlist</div>
+        <div class="breadcrumb-item">Orderlist Manager</div>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-1">
+                <table class="table table-striped" id="order-record-table">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -49,7 +49,7 @@
                       <td>{{ $order_list->driver_id }}</td>
                       <td>
                         <form action="{{route('deleteOrderlist',$order_list->orderlist_id)}}" method="POST"> @csrf
-                          <a href="{{route('detailOrderlist', $order_list->orderlist_id)}}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Confirm">Confirm</a>
+                          <a href="{{route('detailOrderlist_manager', $order_list->orderlist_id)}}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Detail">Detail</a>
                           {{-- <button class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" onclick="confirm('Are You Sure Wants To Delete it?')"><i class="fas fa-trash"></i></button> --}}
                         </form>
                       </td>
@@ -65,32 +65,22 @@
     </div>
   </section>
 </div>
-
-{{-- Alert --}}
-@if (session()->has('confirmPaymentWaiter'))
-  @php
-  echo '<script type="text/javascript">alert("Confirm Payment Success!");</script>';
-  @endphp
-@endif
-
 @endsection
 
 <!-- push JavaScript -->
 @push('scripts')
-<!-- JS Libraies -->
-<script src="{{asset('assets/modules/datatables/datatables.min.js')}}"></script>
-<script src="{{asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js')}}"></script>
-<script src="{{asset('assets/modules/jquery-ui/jquery-ui.min.js')}}"></script>
-
-<!-- Page Specific JS File -->
-<script src="{{asset('assets/js/page/modules-datatables.js')}}"></script>
+<script type="text/javascript" src="/index-table/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/index-table/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/index-table/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="/index-table/js/jszip.min.js"></script>
+<script type="text/javascript" src="/index-table/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="/index-table/js/substable.js"></script>
 @endpush
 
 <!-- Push CSS -->
 @push('css')
 <!-- CSS Libraries -->
-<link rel="stylesheet" href="{{asset('assets/modules/datatables/datatables.min.css')}}">
-<link rel="stylesheet" href="{{asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css" href="/index-table/css/dataTables.bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/index-table/css/buttons.dataTables.min.css" />
+{{-- <link rel="stylesheet" type="text/css" href="/index-table/css/styles.css" /> --}}
 @endpush

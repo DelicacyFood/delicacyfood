@@ -1,26 +1,26 @@
 @extends('layouts.master')
-@section('title', 'History Top-up')
+@section('title', 'Sales Records')
 @section('content')
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>History Top-up</h1>
+      <h1>Sales Records</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="#">Views</a></div>
         <div class="breadcrumb-item"><a href="#">Pages</a></div>
-        <div class="breadcrumb-item">History Top-up</div>
+        <div class="breadcrumb-item">Sales Records</div>
       </div>
     </div>
 
     <div class="section-body">
-      <h2 class="section-title">Page 6</h2>
+      <h2 class="section-title">Page 3</h2>
       
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>Record Top-up History</h4>
+              <h4>Sales Records</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -28,29 +28,34 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>History_Topup_id</th>
-                      <th>Customer_User_id</th>
-                      <th>Top up Date</th>
-                      <th>Total Top up</th>
-                      <th>Status</th>
+                      <th>Orderlist Id</th>
+                      <th>Order date</th>
+                      <th>Total Price</th>
+                      <th>Process Status</th>
+                      <th>Service Status</th>
+                      <th>Driver</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($historytopup as $history_topup)
-                    <tr>
-                      <td>{{$loop->iteration}}</td>
-                      <td>{{ $history_topup->history_topup_id }}</td>
-                      <td>{{ $history_topup->customer_user_id }}</td>
-                      <td>{{ date_format(date_create($history_topup->tanggal_topup),"Y/m/d") }}</td>
-                       <td>Rp. {{ number_format($history_topup->jumlah_topup) }}</td>
-                      <td>{{ $history_topup->status_topup }}</td>
-                      <td>
-                        <form action="{{route('store_saldo', [$history_topup->jumlah_topup, $history_topup->history_topup_id, $history_topup->customer_user_id,])}}" method="POST"> @csrf
-                          <button class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Confirm" onclick="confirm('Are You Sure Wants To Confirm it?')">Confirm</button>
-                        </form>
-                      </td>
-                    </tr>
+                    @foreach($orderlist as $order_list)
+                      @if(($customer_user_id == $order_list->customer_user_id) && ($order_list->status_proses != 'Order Placed'))
+                        <tr>
+                          <td>{{$loop->iteration}}</td>
+                          <td>{{ $order_list->orderlist_id }}</td>
+                          <td>{{ date_format(date_create($order_list->order_date),"Y/m/d") }}</td>
+                          <td>Rp. {{ number_format($order_list->total_bayar) }}</td>
+                          <td>{{ $order_list->status_proses }}</td>
+                          <td>{{ $order_list->status_layanan }}</td>
+                          <td>{{ $order_list->driver_id }}</td>
+                          <td>
+                            <form action="{{route('deleteOrderlist',$order_list->orderlist_id)}}" method="POST"> @csrf
+                              <a href="{{route('detail_sales_record', $order_list->orderlist_id)}}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Invoice">Invoice</a>
+                              {{-- <button class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" onclick="confirm('Are You Sure Wants To Delete it?')"><i class="fas fa-trash"></i></button> --}}
+                            </form>
+                          </td>
+                        </tr>
+                      @endif
                     @endforeach
                   </tbody>
                 </table>
@@ -64,9 +69,9 @@
 </div>
 
 {{-- Alert --}}
-@if (session()->has('topUpConfirmed'))
+@if (session()->has('confirmPaymentWaiter'))
   @php
-  echo '<script type="text/javascript">alert("Top up Confirmed!");</script>';
+  echo '<script type="text/javascript">alert("Confirm Payment Success!");</script>';
   @endphp
 @endif
 
